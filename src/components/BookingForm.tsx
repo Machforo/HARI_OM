@@ -10,10 +10,11 @@ import { Sparkles } from "lucide-react";
 
 interface Props {
   defaultTemple?: string;
+  defaultService?: string;
   compact?: boolean;
 }
 
-export const BookingForm = ({ defaultTemple, compact }: Props) => {
+export const BookingForm = ({ defaultTemple, defaultService, compact }: Props) => {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
@@ -21,7 +22,7 @@ export const BookingForm = ({ defaultTemple, compact }: Props) => {
     phone: "",
     email: "",
     temple: defaultTemple || "",
-    service: "",
+    service: defaultService || "",
     date: "",
     devotees: "1",
     notes: "",
