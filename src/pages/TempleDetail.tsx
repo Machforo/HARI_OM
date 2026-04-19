@@ -90,7 +90,7 @@ const TempleDetail = () => {
             Experience divine blessings at the sacred {temple.name}, dedicated to {temple.deity}. Whether you're planning a VIP Darshan, seeking quick entry, or a hassle-free spiritual journey — this guide covers it all.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
-            <Button asChild variant="divine" size="xl"><a href="#book">Book Now <ArrowRight className="h-4 w-4" /></a></Button>
+            <Button asChild variant="divine" size="xl"><a href="#services">Book a Service <ArrowRight className="h-4 w-4" /></a></Button>
             <Button asChild variant="outline" size="xl" className="bg-background/10 border-background/40 text-background hover:bg-background hover:text-foreground"><a href="#timings">View Timings</a></Button>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2 mt-7 text-sm">
