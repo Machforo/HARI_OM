@@ -4,9 +4,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { BookingForm } from "@/components/BookingForm";
+import { ServiceTabs } from "@/components/ServiceTabs";
 import { getTemple, temples } from "@/data/temples";
-import prasad from "@/assets/prasad.jpg";
-import puja from "@/assets/puja-ritual.jpg";
 
 const TempleDetail = () => {
   const { slug } = useParams();
