@@ -4,9 +4,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { BookingForm } from "@/components/BookingForm";
+import { ServiceTabs } from "@/components/ServiceTabs";
 import { getTemple, temples } from "@/data/temples";
-import prasad from "@/assets/prasad.jpg";
-import puja from "@/assets/puja-ritual.jpg";
 
 const TempleDetail = () => {
   const { slug } = useParams();
@@ -91,7 +90,7 @@ const TempleDetail = () => {
             Experience divine blessings at the sacred {temple.name}, dedicated to {temple.deity}. Whether you're planning a VIP Darshan, seeking quick entry, or a hassle-free spiritual journey — this guide covers it all.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
-            <Button asChild variant="divine" size="xl"><a href="#book">Book Now <ArrowRight className="h-4 w-4" /></a></Button>
+            <Button asChild variant="divine" size="xl"><a href="#services">Book a Service <ArrowRight className="h-4 w-4" /></a></Button>
             <Button asChild variant="outline" size="xl" className="bg-background/10 border-background/40 text-background hover:bg-background hover:text-foreground"><a href="#timings">View Timings</a></Button>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2 mt-7 text-sm">
@@ -166,42 +165,8 @@ const TempleDetail = () => {
             <p className="text-sm text-muted-foreground mt-4">👉 Best time for darshan: early morning or late evening to avoid heavy crowds.</p>
           </section>
 
-          {/* Darshan types */}
-          <section>
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Choose your darshan</p>
-            <h2 className="font-serif-display text-3xl md:text-4xl font-semibold mt-2">Darshan Types & Options</h2>
-            <div className="grid md:grid-cols-3 gap-5 mt-6">
-              {[
-                { t: "General Darshan", d: "Open for all devotees. Waiting time: 1–3 hours (longer on peak days).", c: "border-border" },
-                { t: "VIP Darshan", d: "Faster entry, minimal waiting, dedicated assistance. Ideal for families and seniors.", c: "border-gold ring-2 ring-gold/30 bg-gold-soft/30", badge: "Recommended" },
-                { t: "Festival Darshan", d: "Available during major festivals. Requires advance booking.", c: "border-border" },
-              ].map((d) => (
-                <div key={d.t} className={`p-6 rounded-2xl border ${d.c} relative`}>
-                  {d.badge && <span className="absolute -top-3 left-5 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full bg-gradient-gold text-gold-foreground">{d.badge}</span>}
-                  <h3 className="font-serif-display text-xl font-semibold">{d.t}</h3>
-                  <p className="text-sm text-muted-foreground mt-2">{d.d}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Puja & Prasad */}
-          <section className="grid md:grid-cols-2 gap-8">
-            <div className="rounded-2xl overflow-hidden border border-border bg-card">
-              <img src={puja} alt="Puja ritual at temple" loading="lazy" className="aspect-[4/3] w-full object-cover" />
-              <div className="p-6">
-                <h3 className="font-serif-display text-2xl font-semibold">Puja at {temple.name}</h3>
-                <p className="text-sm text-muted-foreground mt-2">Sankalp puja, abhishek, hawan and special pujas can be arranged in your name — with priest coordination, sankalp video and prasad.</p>
-              </div>
-            </div>
-            <div className="rounded-2xl overflow-hidden border border-border bg-card">
-              <img src={prasad} alt="Temple prasadam" loading="lazy" className="aspect-[4/3] w-full object-cover" />
-              <div className="p-6">
-                <h3 className="font-serif-display text-2xl font-semibold">Prasadam delivered</h3>
-                <p className="text-sm text-muted-foreground mt-2">Authentic temple prasad delivered to your home with care, anywhere in India. A sacred touch of {temple.name} at your doorstep.</p>
-              </div>
-            </div>
-          </section>
+          {/* Services tabs (Darshan / Puja / Prasad / Chadhava) */}
+          <ServiceTabs temple={temple} />
 
           {/* Why us comparison */}
           <section>
