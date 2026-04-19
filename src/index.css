@@ -1,105 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Tiro+Devanagari+Sanskrit&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Vandan Darshan — Premium spiritual design system
+   Cream/ivory canvas, gold + saffron + temple-blue accents inspired by the brand mark.
+   All colors HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Canvas */
+    --background: 40 45% 97%;        /* ivory cream */
+    --foreground: 25 30% 14%;        /* deep ink */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 40 50% 99%;
+    --card-foreground: 25 30% 14%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 40 50% 99%;
+    --popover-foreground: 25 30% 14%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Brand: deep saffron / temple red */
+    --primary: 14 82% 48%;
+    --primary-foreground: 40 50% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Brand: temple blue (devotee on right of logo) */
+    --secondary: 222 60% 28%;
+    --secondary-foreground: 40 50% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Gold (kalash / lotus) */
+    --gold: 38 78% 52%;
+    --gold-foreground: 25 40% 14%;
+    --gold-soft: 42 75% 88%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Saffron warm */
+    --saffron: 22 92% 55%;
+    --saffron-foreground: 40 50% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Indigo deep accent */
+    --indigo: 222 65% 22%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --muted: 38 30% 92%;
+    --muted-foreground: 25 15% 38%;
 
-    --radius: 0.5rem;
+    --accent: 42 75% 88%;
+    --accent-foreground: 25 40% 14%;
 
-    --sidebar-background: 0 0% 98%;
+    --destructive: 0 75% 48%;
+    --destructive-foreground: 40 50% 98%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --border: 35 30% 86%;
+    --input: 35 30% 86%;
+    --ring: 14 82% 48%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    --radius: 0.75rem;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(38 80% 58%), hsl(28 85% 50%));
+    --gradient-saffron: linear-gradient(135deg, hsl(22 92% 55%), hsl(14 82% 48%));
+    --gradient-divine: linear-gradient(135deg, hsl(14 82% 48%) 0%, hsl(38 78% 52%) 50%, hsl(222 60% 28%) 100%);
+    --gradient-cream: linear-gradient(180deg, hsl(40 50% 99%) 0%, hsl(38 45% 94%) 100%);
+    --gradient-hero-overlay: linear-gradient(180deg, hsla(25, 40%, 14%, 0.1) 0%, hsla(25, 40%, 14%, 0.55) 100%);
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    /* Shadows */
+    --shadow-temple: 0 30px 60px -25px hsl(14 82% 48% / 0.35);
+    --shadow-soft: 0 10px 30px -12px hsl(25 30% 14% / 0.12);
+    --shadow-gold: 0 18px 40px -18px hsl(38 78% 52% / 0.55);
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 40 50% 99%;
+    --sidebar-foreground: 25 30% 14%;
+    --sidebar-primary: 14 82% 48%;
+    --sidebar-primary-foreground: 40 50% 98%;
+    --sidebar-accent: 38 30% 92%;
+    --sidebar-accent-foreground: 25 30% 14%;
+    --sidebar-border: 35 30% 86%;
+    --sidebar-ring: 14 82% 48%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 25 25% 8%;
+    --foreground: 40 45% 95%;
+    --card: 25 25% 10%;
+    --card-foreground: 40 45% 95%;
+    --popover: 25 25% 10%;
+    --popover-foreground: 40 45% 95%;
+    --primary: 22 92% 58%;
+    --primary-foreground: 25 25% 8%;
+    --secondary: 222 50% 30%;
+    --secondary-foreground: 40 45% 95%;
+    --gold: 38 78% 60%;
+    --gold-foreground: 25 25% 8%;
+    --gold-soft: 38 30% 25%;
+    --saffron: 22 92% 60%;
+    --saffron-foreground: 25 25% 8%;
+    --muted: 25 15% 18%;
+    --muted-foreground: 40 20% 70%;
+    --accent: 25 15% 18%;
+    --accent-foreground: 40 45% 95%;
+    --destructive: 0 75% 50%;
+    --destructive-foreground: 40 45% 95%;
+    --border: 25 15% 20%;
+    --input: 25 15% 20%;
+    --ring: 22 92% 58%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-image:
+      radial-gradient(circle at 0% 0%, hsl(38 78% 52% / 0.06) 0, transparent 40%),
+      radial-gradient(circle at 100% 100%, hsl(222 60% 28% / 0.05) 0, transparent 45%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    @apply tracking-tight;
+  }
+  .font-devanagari { font-family: 'Tiro Devanagari Sanskrit', serif; }
+  .font-serif-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+}
+
+@layer components {
+  .container-prose { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
+
+  .divider-om {
+    @apply relative flex items-center justify-center my-8 text-[hsl(var(--gold))];
+  }
+  .divider-om::before, .divider-om::after {
+    content: ''; @apply flex-1 h-px;
+    background: linear-gradient(90deg, transparent, hsl(var(--gold) / 0.5), transparent);
+  }
+  .divider-om > span { @apply mx-4 text-2xl font-serif-display; }
+
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-divine {
+    background: var(--gradient-divine);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  .card-temple {
+    @apply rounded-2xl overflow-hidden bg-card border border-border;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth);
   }
+  .card-temple:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-temple);
+  }
+
+  .ornament-corner {
+    background-image:
+      radial-gradient(circle at 0 0, hsl(var(--gold) / 0.4) 0 1px, transparent 1px),
+      radial-gradient(circle at 100% 100%, hsl(var(--gold) / 0.4) 0 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-gold { background: var(--gradient-gold); }
+  .bg-gradient-saffron { background: var(--gradient-saffron); }
+  .bg-gradient-divine { background: var(--gradient-divine); }
+  .bg-gradient-cream { background: var(--gradient-cream); }
+  .shadow-temple { box-shadow: var(--shadow-temple); }
+  .shadow-gold { box-shadow: var(--shadow-gold); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
 }
