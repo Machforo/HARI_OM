@@ -1,13 +1,15 @@
 import { SEO } from "@/components/SEO";
-import logo from "@/assets/logo.png";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo-final.png";
 import devotees from "@/assets/devotees.jpg";
-import { Heart, Shield, Sparkles, Users } from "lucide-react";
+import { Heart, Shield, Sparkles, Users, ArrowRight } from "lucide-react";
 
 const About = () => (
   <>
     <SEO
       title="About Vandan Darshan — Devotees serving devotees"
-      description="Vandan Darshan is a trusted spiritual concierge spreading devotion through VIP darshan, puja, prasad and chadhava across India's most sacred temples."
+      description="Vandan Darshan is a trusted spiritual concierge spreading devotion through Special Darshan, puja, prasad and chadhava across India's most sacred temples."
     />
 
     <section className="container-prose py-20 grid lg:grid-cols-2 gap-12 items-center">
@@ -53,8 +55,25 @@ const About = () => (
       <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Our mission</p>
       <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3">Spreading spirituality, one devotee at a time.</h2>
       <p className="text-muted-foreground mt-6 leading-relaxed text-lg">
-        We aim to make spiritual experiences accessible, organised and meaningful — across India and the world. Whether it's a VIP darshan, a sacred puja in your name, or a packet of prasad arriving at your home, our promise is the same: care, authenticity and the warmth of devotion.
+        We aim to make spiritual experiences accessible, organised and meaningful — across India and the world. Whether it's a Special Darshan, a sacred puja in your name, or a packet of prasad arriving at your home, our promise is the same: care, authenticity and the warmth of devotion.
       </p>
+    </section>
+
+    <section className="container-prose py-20">
+      <div className="rounded-3xl bg-gradient-divine p-10 md:p-16 text-primary-foreground text-center">
+        <h2 className="font-serif-display text-4xl md:text-5xl font-semibold">Ready to start your spiritual journey?</h2>
+        <p className="opacity-90 mt-4 max-w-2xl mx-auto">
+          Explore our complete range of services tailored to every devotee's needs and dreams.
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+          <Button asChild variant="gold" size="xl">
+            <Link to="/services">Explore Services <ArrowRight className="h-4 w-4" /></Link>
+          </Button>
+          <Button asChild variant="outline" size="xl">
+            <Link to="/book">Book Darshan Now</Link>
+          </Button>
+        </div>
+      </div>
     </section>
   </>
 );

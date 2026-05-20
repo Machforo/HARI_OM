@@ -5,7 +5,7 @@ const Terms = () => (
     <p>Welcome to Vandan Darshan ("we", "us", "our"). By accessing or using our website and services, you ("user", "devotee") agree to these Terms & Conditions. Please read them carefully.</p>
 
     <h2>1. Nature of services</h2>
-    <p>Vandan Darshan is a spiritual concierge that assists devotees with VIP darshan coordination, puja booking, prasad delivery, chadhava and yatra arrangements at various temples in India and abroad. We act as a facilitator and are not affiliated with any temple trust unless expressly stated.</p>
+    <p>Vandan Darshan is a spiritual concierge that assists devotees with Special Darshan coordination, puja booking, prasad delivery, chadhava and yatra arrangements at various temples in India and abroad. We act as a facilitator and are not affiliated with any temple trust unless expressly stated.</p>
 
     <h2>2. Bookings</h2>
     <ul>
@@ -37,7 +37,7 @@ const Terms = () => (
     <p>We may update these Terms from time to time. The latest version will always be available on this page.</p>
 
     <h2>9. Contact</h2>
-    <p>For any queries, write to <a href="mailto:care@vandandarshan.com" className="text-primary">care@vandandarshan.com</a> or call +91 99999 99999.</p>
+    <p>For any queries, write to <a href="mailto:seva@vandandarshan.com" className="text-primary">seva@vandandarshan.com</a> or call +91 99999 99999.</p>
   </LegalLayout>
 );
 

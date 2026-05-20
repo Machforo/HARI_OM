@@ -23,7 +23,7 @@ const Disclaimer = () => (
     <p>Content on this website is not medical, legal or financial advice. Pilgrims with health conditions should consult their physician before undertaking strenuous yatras.</p>
 
     <h2>7. Contact</h2>
-    <p>Questions? Write to <a href="mailto:care@vandandarshan.com" className="text-primary">care@vandandarshan.com</a>.</p>
+    <p>Questions? Write to <a href="mailto:seva@vandandarshan.com" className="text-primary">seva@vandandarshan.com</a>.</p>
   </LegalLayout>
 );
 

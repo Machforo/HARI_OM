@@ -5,7 +5,7 @@ const Book = () => (
   <>
     <SEO
       title="Book Darshan, Puja or Prasad — Vandan Darshan"
-      description="Book VIP darshan, puja, prasad delivery or chadhava across India. Share your details — Vandan Darshan team responds within 30 minutes."
+      description="Book Special Darshan, puja, prasad delivery or chadhava across India. Share your details — Vandan Darshan team responds within 30 minutes."
     />
     <section className="container-prose py-16 text-center">
       <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Begin your journey</p>

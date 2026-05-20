@@ -33,7 +33,7 @@ const Cancellation = () => (
     </ul>
 
     <h2>6. How to request</h2>
-    <p>Email <a href="mailto:care@vandandarshan.com" className="text-primary">care@vandandarshan.com</a> with your booking reference and reason. Our team will respond within 24 hours.</p>
+    <p>Email <a href="mailto:seva@vandandarshan.com" className="text-primary">seva@vandandarshan.com</a> with your booking reference and reason. Our team will respond within 24 hours.</p>
   </LegalLayout>
 );
 

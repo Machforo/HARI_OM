@@ -6,7 +6,7 @@ const Contact = () => (
   <>
     <SEO
       title="Contact Vandan Darshan — Get in touch with our team"
-      description="Reach Vandan Darshan for VIP darshan bookings, puja, prasad and yatra assistance. Call, email or request a callback — we respond within 30 minutes."
+      description="Reach Vandan Darshan for Special Darshan bookings, puja, prasad and yatra assistance. Call, email or request a callback — we respond within 30 minutes."
     />
 
     <section className="container-prose py-16 text-center">
@@ -18,9 +18,9 @@ const Contact = () => (
     <section className="container-prose pb-24 grid lg:grid-cols-3 gap-8">
       <div className="space-y-4">
         {[
-          { i: Phone, t: "Call us", v: "+91 99999 99999", h: "Mon–Sun, 8am – 9pm IST" },
-          { i: MessageCircle, t: "WhatsApp", v: "+91 99999 99999", h: "Quick replies, 24×7" },
-          { i: Mail, t: "Email", v: "care@vandandarshan.com", h: "We reply within 4 hours" },
+          { i: Phone, t: "Call us", v: "+91 89609 65151", h: "Mon–Sun, 8am – 9pm IST" },
+          { i: MessageCircle, t: "WhatsApp", v: "+91 89609 65151", h: "Quick replies, 24×7" },
+          { i: Mail, t: "Email", v: "seva@vandandarshan.com", h: "We reply within 4 hours" },
           { i: MapPin, t: "Office", v: "Vandan Darshan Pvt. Ltd.", h: "India" },
         ].map((c) => (
           <div key={c.t} className="p-6 rounded-2xl border border-border bg-card flex items-start gap-4">

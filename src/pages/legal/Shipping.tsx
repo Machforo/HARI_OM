@@ -22,7 +22,7 @@ const Shipping = () => (
     <p>Delays may occur due to courier issues, weather, festivals or customs. We are not liable for delays caused by third-party logistics partners.</p>
 
     <h2>5. Damage / non-receipt</h2>
-    <p>Report any damage or non-delivery within 7 days of expected delivery to <a href="mailto:care@vandandarshan.com" className="text-primary">care@vandandarshan.com</a>. We will investigate and re-ship at no cost where applicable.</p>
+    <p>Report any damage or non-delivery within 7 days of expected delivery to <a href="mailto:seva@vandandarshan.com" className="text-primary">seva@vandandarshan.com</a>. We will investigate and re-ship at no cost where applicable.</p>
 
     <h2>6. Address accuracy</h2>
     <p>Please ensure your shipping address and contact number are accurate. Re-shipping due to incorrect address may incur additional charges.</p>

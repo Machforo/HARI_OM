@@ -40,7 +40,7 @@ const Privacy = () => (
     <p>Our site uses essential cookies for functionality and analytics cookies to improve user experience. You may disable cookies in your browser.</p>
 
     <h2>8. Contact</h2>
-    <p>For privacy queries, write to <a href="mailto:care@vandandarshan.com" className="text-primary">care@vandandarshan.com</a>.</p>
+    <p>For privacy queries, write to <a href="mailto:seva@vandandarshan.com" className="text-primary">seva@vandandarshan.com</a>.</p>
   </LegalLayout>
 );
 

@@ -55,15 +55,13 @@ export const ServiceTabs = ({ temple }: { temple: Temple }) => {
               role="tab"
               aria-selected={isActive}
               onClick={() => setActive(s.key)}
-              className={`group relative flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all ${
-                isActive
+              className={`group relative flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all ${isActive
                   ? "bg-card shadow-temple border border-gold/40"
                   : "hover:bg-card/70 border border-transparent"
-              }`}
+                }`}
             >
-              <div className={`h-10 w-10 shrink-0 grid place-items-center rounded-lg transition-colors ${
-                isActive ? "bg-gradient-gold text-gold-foreground" : "bg-gold-soft text-gold"
-              }`}>
+              <div className={`h-10 w-10 shrink-0 grid place-items-center rounded-lg transition-colors ${isActive ? "bg-gradient-gold text-gold-foreground" : "bg-gold-soft text-gold"
+                }`}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="min-w-0">
@@ -109,9 +107,8 @@ const PriceCard = ({
   highlighted?: boolean;
   badge?: string;
 }) => (
-  <div className={`relative p-6 rounded-2xl border ${
-    highlighted ? "border-gold ring-2 ring-gold/30 bg-gold-soft/30" : "border-border bg-card"
-  }`}>
+  <div className={`relative p-6 rounded-2xl border ${highlighted ? "border-gold ring-2 ring-gold/30 bg-gold-soft/30" : "border-border bg-card"
+    }`}>
     {badge && (
       <span className="absolute -top-3 left-5 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full bg-gradient-gold text-gold-foreground">
         {badge}
@@ -178,7 +175,7 @@ const DarshanPanel = ({ temple }: { temple: Temple }) => (
         features={["Queue guidance", "Slot booking", "Local support"]}
       />
       <PriceCard
-        title="VIP Darshan"
+        title="Special Darshan"
         price="₹1,851"
         features={["Fast-track entry", "Dedicated assistant", "Aarti pass coordination", "Family-friendly"]}
         highlighted

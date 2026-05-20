@@ -1,243 +1,441 @@
+import { ArrowRight, Calendar, Check, Sparkles, MapPin, Star, PlayCircle, Heart, Shield, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Flame, Gift, Sparkles, ShieldCheck, Users, Star, Phone, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
-import { TempleCard } from "@/components/TempleCard";
+import { cn } from "@/lib/utils";
 import { BookingForm } from "@/components/BookingForm";
-import { temples } from "@/data/temples";
-import hero from "@/assets/hero-devotee.jpg";
-import puja from "@/assets/puja-ritual.jpg";
-import devotees from "@/assets/devotees.jpg";
-
-const services = [
-  { icon: Sparkles, title: "VIP Darshan", desc: "Skip the queue with priority access for you and your family." },
-  { icon: Flame, title: "Puja Booking", desc: "Sankalp pujas, abhishek, hawan & havans performed in your name." },
-  { icon: Gift, title: "Prasad Delivery", desc: "Authentic temple prasadam delivered to your doorstep." },
-  { icon: ShieldCheck, title: "Chadhava & Offerings", desc: "Chadhava, chunni, garlands offered on your behalf with photos." },
-];
-
-const stats = [
-  { n: "10,000+", l: "Devotees served" },
-  { n: "50+", l: "Temples covered" },
-  { n: "4.9 / 5", l: "Devotee rating" },
-  { n: "24×7", l: "Support" },
-];
+import { templeList } from "@/data/temples";
+import { motion } from "framer-motion";
+import { FAQSection } from "@/components/FAQSection";
+import { BlogPreview } from "@/components/BlogPreview";
+import { TestimonialSlider } from "@/components/TestimonialSlider";
+import { Counter } from "@/components/Counter";
+import { VideoBanner } from "@/components/VideoBanner";
+import { CredibilityScroller } from "@/components/CredibilityScroller";
+import { AnimatedCollage } from "@/components/AnimatedCollage";
 
 const Index = () => {
-  const featured = temples.slice(0, 6);
-
-  const orgJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Vandan Darshan",
-    url: typeof window !== "undefined" ? window.location.origin : "",
-    description: "Trusted spiritual concierge for VIP darshan, puja, prasad and chadhava across India's most sacred temples.",
-    contactPoint: { "@type": "ContactPoint", telephone: "+91-99999-99999", contactType: "customer service", areaServed: "IN" },
-  };
-
   return (
-    <>
+    <div className="scroll-smooth">
       <SEO
-        title="Vandan Darshan — VIP Darshan, Puja & Prasad across India"
-        description="Trusted concierge for VIP darshan, puja, prasad and chadhava at India's most sacred temples. Skip queues, book with devotee-first care."
-        jsonLd={orgJsonLd}
+        title="Vandan Darshan | Your Gateway to Divine Grace & Sacred Experiences"
+        description="Experience a seamless spiritual journey with Vandan Darshan. Specialized assistance for Special Darshan, Puja, and Prasad at India's holiest temples."
       />
 
-      {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={hero} alt="Devotee praying with diyas at a temple" width={1920} height={1080} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
+      {/* HERO SECTION */}
+      <section className="relative min-h-screen lg:h-screen flex items-center pt-32 pb-16 lg:pt-40 lg:pb-0 overflow-hidden">
+        {/* Dynamic Video/Banner Background */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-hero-overlay z-10" />
+          <VideoBanner />
         </div>
-        <div className="container-prose relative grid lg:grid-cols-12 gap-10 py-20 lg:py-32 items-center">
-          <div className="lg:col-span-7 animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-soft border border-gold/30 text-xs font-semibold tracking-wider uppercase text-foreground">
-              <span className="font-devanagari text-gold">॥ ॐ ॥</span> Trusted by 10,000+ devotees
-            </div>
-            <h1 className="font-serif-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] mt-6">
-              Your sacred journey, <br/>
-              <span className="text-gradient-divine">guided with grace.</span>
-            </h1>
-            <p className="font-devanagari text-2xl text-gold mt-3">वन्दन दर्शन — हर भक्त के लिए</p>
-            <p className="text-lg text-muted-foreground max-w-xl mt-6 leading-relaxed">
-              VIP darshan, puja, prasad and chadhava across India's most revered temples. We handle the logistics — you receive the blessings.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-8">
-              <Button asChild variant="divine" size="xl"><Link to="/book">Book Darshan <ArrowRight className="h-4 w-4" /></Link></Button>
-              <Button asChild variant="outlineGold" size="xl"><Link to="/temples">Explore Temples</Link></Button>
-            </div>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-8 text-sm text-foreground/75">
-              {["VIP Darshan Assistance", "Same-day Bookings", "On-ground Support"].map((b) => (
-                <span key={b} className="inline-flex items-center gap-1.5"><Check className="h-4 w-4 text-gold" /> {b}</span>
-              ))}
-            </div>
-          </div>
 
-          {/* Quick form card */}
-          <div className="lg:col-span-5 relative animate-fade-up" style={{ animationDelay: "150ms" }}>
-            <div className="absolute -inset-2 bg-gradient-divine rounded-3xl blur-xl opacity-20" />
-            <div className="relative bg-card border border-border rounded-3xl p-6 shadow-temple">
-              <div className="flex items-center gap-3 pb-4 border-b border-border">
-                <div className="h-10 w-10 grid place-items-center rounded-full bg-gradient-gold text-gold-foreground"><Phone className="h-4 w-4" /></div>
-                <div>
-                  <h3 className="font-serif-display text-xl font-semibold">Request a callback</h3>
-                  <p className="text-xs text-muted-foreground">Our team responds within 30 minutes</p>
+        <div className="container-prose relative z-20 pt-10 pb-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-white"
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6"
+              >
+                <Sparkles className="h-3 w-3 text-gold" />
+                <span className="text-[10px] font-black uppercase tracking-widest">10,000+ Blessed Journeys Facilitated</span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                className="font-serif-display text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
+              >
+                Connect with the <br />
+                <span className="text-gold italic font-light italic-font relative inline-block drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                  Divine
+                  <motion.span
+                    animate={{ opacity: [0.1, 0.3, 0.1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="absolute inset-0 blur-xl bg-gold/30 -z-10"
+                  ></motion.span>
+                </span> Grace.
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="mt-6 text-lg md:text-xl text-white max-w-md leading-relaxed font-semibold drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]"
+              >
+                We bridge the gap between devotion and logistics. Focus on your prayer while we handle the path to sacred shrines.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="mt-8 flex flex-wrap gap-4"
+              >
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 rounded-full h-14 text-base font-black shadow-gold border-none" asChild>
+                  <Link to="/temples">Explore Shrines <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                </Button>
+                <div className="flex items-center gap-4 group cursor-pointer">
+                  <div className="h-12 w-12 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                    <PlayCircle className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="font-bold tracking-widest text-[10px] uppercase text-white/90">Watch Journey</span>
                 </div>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50, rotateY: -15 }}
+              animate={{ opacity: 1, x: 0, rotateY: 0 }}
+              transition={{ duration: 1.2, delay: 0.4 }}
+              className="bg-white/95 backdrop-blur-xl p-6 md:p-8 rounded-[3rem] shadow-2xl border border-white/20 relative preserve-3d max-w-[420px] ml-auto w-full"
+            >
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-4 -left-4 h-16 w-16 bg-gold rounded-full flex items-center justify-center text-white shadow-gold z-10 rotate-12"
+              >
+                <Star className="h-6 w-6 fill-current" />
+              </motion.div>
+              <h2 className="font-serif-display text-2xl font-bold text-secondary mb-1 text-center tracking-tight">Sacred Booking</h2>
+              <p className="text-center text-muted-foreground mb-6 text-[10px] font-medium italic uppercase tracking-wider">Start your divine pilgrimage today</p>
+              <BookingForm compact />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Animated Scroll Indicator */}
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2"
+        >
+          <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Scroll To Explore</span>
+        </motion.div>
+      </section>
+
+      <CredibilityScroller />
+
+      {/* WATCH OUR JOURNEY SECTION */}
+      <section className="py-32 bg-white overflow-hidden">
+        <div className="container-prose">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-4">Divine Legacy</h2>
+              <h3 className="font-serif-display text-4xl md:text-6xl font-bold text-secondary mb-8 leading-tight">Watch Our <span className="text-primary italic">Journey</span> of Faith</h3>
+              <p className="text-lg text-muted-foreground mb-10 font-medium leading-relaxed">
+                From the peaks of the Himalayas to the shores of the Arabian Sea, witness how we facilitate the sacred connection between devotees and the divine. Our journey is paved with faith, dedication, and thousands of blessed smiles.
+              </p>
+              <div className="flex flex-col gap-6">
+                {[
+                  { title: "Verified Logistics", desc: "Safe and secure travel arrangements for all age groups.", icon: Shield, color: "gold" },
+                  { title: "Elderly Care", desc: "Specialized assistance for senior citizens and differently-abled devotees.", icon: Users, color: "primary" }
+                ].map((item, i) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + (i * 0.2) }}
+                    className={cn(
+                      "flex items-center gap-6 p-6 rounded-[2.5rem] border",
+                      item.color === "gold" ? "bg-gold-soft/20 border-gold/10" : "bg-primary/5 border-primary/10"
+                    )}
+                  >
+                    <div className={cn(
+                      "h-12 w-12 rounded-xl flex items-center justify-center text-white",
+                      item.color === "gold" ? "bg-gold shadow-gold" : "bg-primary shadow-primary"
+                    )}>
+                      <item.icon className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-secondary">{item.title}</h4>
+                      <p className="text-xs text-muted-foreground font-medium">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-              <div className="pt-4">
-                <BookingForm compact />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="relative group cursor-pointer"
+            >
+              <div className="aspect-video rounded-[3.5rem] overflow-hidden shadow-2xl relative">
+                <video
+                  src="/assets/videos/mp4.mp4"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
               </div>
-            </div>
+              {/* Floating Badge */}
+              <motion.div
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-10 -right-10 bg-white p-8 rounded-[3rem] shadow-2xl border border-border/40 hidden md:block"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+                    <Sparkles className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-black uppercase tracking-widest text-muted-foreground">Certified</span>
+                    <span className="font-bold text-secondary">Divine Excellence</span>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* STATS */}
-      <section className="border-y border-border bg-muted/40">
-        <div className="container-prose grid grid-cols-2 md:grid-cols-4 gap-6 py-10">
-          {stats.map((s) => (
-            <div key={s.l} className="text-center">
-              <div className="font-serif-display text-3xl md:text-4xl font-semibold text-gradient-gold">{s.n}</div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground mt-1">{s.l}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <section className="container-prose py-20">
-        <div className="text-center max-w-2xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">What we offer</p>
-          <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3">A complete spiritual concierge</h2>
-          <div className="divider-om"><span>॥ ॐ ॥</span></div>
-          <p className="text-muted-foreground">From booking to blessings — we walk alongside you at every step of the journey.</p>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {services.map((s, i) => (
-            <div key={s.title} className="group relative p-7 rounded-2xl border border-border bg-card hover:border-gold/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-temple animate-fade-up" style={{ animationDelay: `${i * 80}ms` }}>
-              <div className="h-14 w-14 grid place-items-center rounded-2xl bg-gradient-gold text-gold-foreground shadow-gold mb-5 group-hover:scale-110 transition-transform">
-                <s.icon className="h-6 w-6" />
-              </div>
-              <h3 className="font-serif-display text-2xl font-semibold">{s.title}</h3>
-              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* TEMPLES */}
-      <section className="container-prose py-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Sacred destinations</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3">Featured temples</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl">Hand-picked shrines we serve with on-ground teams and trusted local partners.</p>
-          </div>
-          <Button asChild variant="outlineGold"><Link to="/temples">View all temples <ArrowRight className="h-4 w-4" /></Link></Button>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featured.map((t) => <TempleCard key={t.slug} temple={t} />)}
-        </div>
-      </section>
-
-      {/* WHY US */}
-      <section className="container-prose py-20 grid lg:grid-cols-2 gap-14 items-center">
-        <div className="relative">
-          <div className="absolute -inset-3 bg-gradient-saffron rounded-3xl opacity-15 blur-2xl" />
-          <img src={puja} alt="Priest performing puja with diya and marigolds" loading="lazy" width={1280} height={896} className="relative rounded-3xl shadow-temple object-cover aspect-[4/5]" />
-        </div>
-        <div>
-          <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Why Vandan Darshan</p>
-          <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3">A trusted hand on every step of your yatra</h2>
-          <p className="text-muted-foreground mt-4 leading-relaxed">We were founded by devotees, for devotees. Every booking is a prayer for us — handled with the seriousness it deserves.</p>
-          <ul className="mt-8 space-y-5">
+      {/* STATS SECTION */}
+      <section className="py-32 bg-secondary relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 bg-[url('/assets/images/temples/pattern.png')] bg-repeat" />
+        <div className="container-prose relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
             {[
-              { i: Users, t: "10,000+ devotees served", d: "Families, seniors and first-time pilgrims trust us across India." },
-              { i: ShieldCheck, t: "Verified local partners", d: "Vetted on-ground teams ensure a safe, authentic experience." },
-              { i: Sparkles, t: "Personalised coordination", d: "Every itinerary is tailored to your time, age and needs." },
-              { i: Star, t: "Devotee-first promise", d: "Transparent pricing, real-time updates, no hidden surprises." },
-            ].map((b) => (
-              <li key={b.t} className="flex gap-4">
-                <div className="shrink-0 h-11 w-11 grid place-items-center rounded-xl bg-gold-soft text-gold"><b.i className="h-5 w-5" /></div>
-                <div>
-                  <h3 className="font-semibold text-lg">{b.t}</h3>
-                  <p className="text-sm text-muted-foreground">{b.d}</p>
+              { label: "Sacred Shrines", value: "100+", icon: MapPin },
+              { label: "Happy Devotees", value: "10k+", icon: Users },
+              { label: "Authenticity", value: "100%", icon: Shield },
+              { label: "Daily Rituals", value: "50+", icon: Heart },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <stat.icon className="h-8 w-8 text-gold mx-auto mb-4" />
+                <div className="text-5xl font-serif-display font-bold text-white mb-2">
+                  <Counter value={stat.value} />
                 </div>
-              </li>
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">{stat.label}</div>
+              </motion.div>
             ))}
-          </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURED TEMPLES */}
+      <section className="py-32 bg-white relative">
+        <div className="container-prose">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="max-w-2xl"
+            >
+              <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-4">Sacred Destinations</h2>
+              <h3 className="font-serif-display text-4xl md:text-6xl font-bold text-secondary">Discover India's <span className="text-primary italic">Holiest</span> Shrines</h3>
+            </motion.div>
+            <Button asChild variant="outline" className="border-gold text-gold hover:bg-gold hover:text-white rounded-full px-8 h-12">
+              <Link to="/temples">View All Shrines <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            </Button>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {templeList.slice(0, 3).map((temple, i) => (
+              <motion.div
+                key={temple.slug}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <Link to={`/${temple.slug}-temple`} className="group block">
+                  <div className="relative aspect-[4/5] rounded-[4rem] overflow-hidden shadow-soft group-hover:shadow-2xl transition-all duration-700">
+                    <img src={temple.image} alt={temple.name} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/95 via-secondary/20 to-transparent" />
+                    <div className="absolute bottom-12 left-12 right-12">
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gold mb-3">
+                        <MapPin className="h-3 w-3" /> {temple.location}
+                      </div>
+                      <h4 className="font-serif-display text-3xl font-bold text-white mb-6 leading-tight">{temple.name}</h4>
+                      <div className="h-px w-full bg-white/20 mb-8" />
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-white/70">Explore Journey</span>
+                        <motion.div
+                          whileHover={{ x: 5 }}
+                          className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-primary transition-colors"
+                        >
+                          <ArrowRight className="h-6 w-6" />
+                        </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="bg-muted/40 border-y border-border py-20">
+      <section className="bg-background">
+        <TestimonialSlider />
+      </section>
+
+      {/* AI PLANNER CTA BANNER */}
+      <section className="py-12 bg-white">
         <div className="container-prose">
-          <div className="text-center max-w-2xl mx-auto">
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Devotee blessings</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3">Words from our devotees</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            {[
-              { q: "Smooth and hassle-free VIP darshan at Tirupati. The team coordinated everything for my parents.", n: "Anjali Sharma", l: "Bengaluru" },
-              { q: "Saved hours of waiting at Mahakaleshwar. Bhasma Aarti was a dream come true.", n: "Ramesh Patel", l: "Ahmedabad" },
-              { q: "Truly divine experience. The puja was performed with full sankalp and we received the prasad too.", n: "Suman Iyer", l: "Mumbai" },
-            ].map((t) => (
-              <figure key={t.n} className="bg-card border border-border rounded-2xl p-7 shadow-soft relative">
-                <div className="absolute -top-4 left-7 h-8 w-8 grid place-items-center rounded-full bg-gradient-gold text-gold-foreground text-xl font-serif-display">"</div>
-                <blockquote className="text-foreground/85 italic leading-relaxed">{t.q}</blockquote>
-                <figcaption className="mt-5 pt-5 border-t border-border">
-                  <div className="font-semibold">{t.n}</div>
-                  <div className="text-xs text-muted-foreground">{t.l}</div>
-                  <div className="flex gap-0.5 mt-1.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />)}</div>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="w-full rounded-[2.5rem] p-10 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden border border-gold/20 bg-secondary"
+          >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-[0.03] grayscale bg-[url('/assets/images/temples/pattern.png')] bg-repeat pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/10 blur-[120px] rounded-full pointer-events-none" />
+            
+            <div className="relative z-10 max-w-3xl">
+              <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-colors px-4 py-1.5 rounded-full text-gold text-[10px] font-black tracking-widest uppercase mb-6 backdrop-blur-md border border-gold/30">
+                <Sparkles className="w-3.5 h-3.5" />
+                Divine Guidance
+              </div>
+              <h2 className="text-3xl md:text-5xl font-serif-display font-bold text-white mb-4 leading-tight">
+                Consult the <span className="text-gold italic">Divine AI Guru</span>
+              </h2>
+              <p className="text-white/70 text-lg md:text-xl font-medium leading-relaxed max-w-2xl">
+                Chat with our wise spiritual assistant to seek guidance on daily rituals, find the right temple for your prayers, or share your kundli for astrological insights.
+              </p>
+            </div>
+            
+            <div className="relative z-10 shrink-0 w-full lg:w-auto">
+              <Button size="xl" className="w-full lg:w-auto bg-primary text-white hover:bg-primary/90 h-16 px-10 rounded-full font-black text-lg shadow-gold hover:scale-105 transition-all duration-300 border border-white/10" asChild>
+                <Link to="/consultant">
+                  Seek Guidance <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* PROCESS */}
-      <section className="container-prose py-20">
-        <div className="text-center max-w-2xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">How it works</p>
-          <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3">Four steps to your blessings</h2>
-        </div>
-        <div className="grid md:grid-cols-4 gap-6 mt-12 relative">
-          {[
-            { n: "01", t: "Choose a temple", d: "Pick from 50+ sacred temples we serve." },
-            { n: "02", t: "Share details", d: "Tell us your dates, devotees and service." },
-            { n: "03", t: "We coordinate", d: "Bookings, slots, on-ground support arranged." },
-            { n: "04", t: "Receive blessings", d: "A peaceful, divine darshan experience." },
-          ].map((p, i) => (
-            <div key={p.n} className="relative p-7 rounded-2xl border border-border bg-card hover:shadow-temple transition-all">
-              <div className="font-serif-display text-5xl text-gradient-gold font-semibold">{p.n}</div>
-              <h3 className="font-semibold text-lg mt-3">{p.t}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{p.d}</p>
-              {i < 3 && <ArrowRight className="hidden md:block absolute top-9 -right-5 h-5 w-5 text-gold/60" />}
-            </div>
-          ))}
-        </div>
+      {/* BLOGS */}
+      <section className="bg-white">
+        <BlogPreview />
       </section>
 
-      {/* FINAL CTA */}
-      <section className="container-prose py-12">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-divine p-10 md:p-16 text-primary-foreground">
-          <div className="absolute inset-0 opacity-20">
-            <img src={devotees} alt="" loading="lazy" className="h-full w-full object-cover" />
+      {/* DEVOTIONAL MOMENTS COLLAGE */}
+      <section className="py-32 bg-gold-soft/10 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+        <div className="container-prose">
+          <div className="text-center mb-20">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-4">Divine Connections</h2>
+            <h3 className="font-serif-display text-4xl md:text-6xl font-bold text-secondary mb-6">Experience the <span className="text-primary italic">Soul</span> of India</h3>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-medium">
+              Join thousands of devotees who have found peace and spiritual fulfillment through our sacred assistance.
+            </p>
           </div>
-          <div className="relative grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <p className="font-devanagari text-3xl text-gold-soft">श्री गणेशाय नमः</p>
-              <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3 leading-tight">Begin your sacred journey today</h2>
-              <p className="opacity-90 mt-4 text-lg">Limited VIP slots available across major temples. Book now to secure your darshan.</p>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1.2 }}
+            viewport={{ once: true }}
+            className="relative rounded-[5rem] overflow-hidden shadow-2xl border-4 border-white"
+          >
+            <div className="relative h-full min-h-[500px]">
+              <AnimatedCollage />
             </div>
-            <div className="flex md:justify-end gap-3">
-              <Button asChild variant="gold" size="xl"><Link to="/book">Book Darshan Now <ArrowRight className="h-4 w-4" /></Link></Button>
+            <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-12 left-12 right-12 flex items-center justify-between text-white">
+              <div className="flex items-center gap-6">
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="h-16 w-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20"
+                >
+                  <Heart className="h-8 w-8 text-gold fill-current" />
+                </motion.div>
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-widest opacity-60">Tradition</span>
+                  <span className="text-2xl font-bold font-serif-display">100% Authentic Indian Experience</span>
+                </div>
+              </div>
             </div>
-          </div>
+          </motion.div>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+      </section>
+
+      {/* FAQ */}
+      <section className="bg-white">
+        <FAQSection />
+      </section>
+
+      {/* CTA SECTION */}
+      <section className="py-32 relative overflow-hidden bg-secondary">
+        <div className="absolute inset-0 opacity-[0.03] grayscale bg-[url('/assets/images/temples/pattern.png')] bg-repeat" />
+        <div className="container-prose relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-white/10 backdrop-blur-md mb-8 border border-white/10"
+          >
+            <Sparkles className="h-12 w-12 text-gold" />
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="font-serif-display text-4xl md:text-7xl font-bold text-white mb-8 leading-tight"
+          >
+            Ready for your <br />
+            <span className="text-gold italic">Sacred</span> Darshan?
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="text-white/60 text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
+          >
+            Let Vandan Darshan handle the logistics so you can focus on the divine connection. Your sacred journey starts with a single step.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap justify-center gap-6"
+          >
+            <Button size="xl" className="bg-primary hover:bg-primary/90 text-white px-12 h-20 rounded-full text-xl font-black shadow-gold" asChild>
+              <Link to="/book">Reserve Your Sacred Journey</Link>
+            </Button>
+            <Button size="xl" variant="secondary" className="bg-white/10 text-white hover:bg-white/20 px-12 h-20 rounded-full text-xl font-black backdrop-blur-md border border-white/20" asChild>
+              <a href="tel:8960965151">Call Support</a>
+            </Button>
+          </motion.div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

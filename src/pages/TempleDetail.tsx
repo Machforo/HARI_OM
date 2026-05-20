@@ -1,289 +1,464 @@
-import { Link, useParams } from "react-router-dom";
-import { ArrowRight, Calendar, Check, Clock, MapPin, Plane, Train, Car, Star } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Link, useParams, useLocation } from "react-router-dom";
+import { ArrowRight, Calendar, Check, Clock, MapPin, Star, Volume2, Sparkles, Flame, Gift, Compass, Heart, Share2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
-import { BookingForm } from "@/components/BookingForm";
-import { ServiceTabs } from "@/components/ServiceTabs";
-import { getTemple, temples } from "@/data/temples";
+import { BookingModal } from "@/components/BookingModal";
+import { DocxRenderer } from "@/components/DocxRenderer";
+import { templeFiles, darshanFiles } from "@/data/templeList";
+import { templeMetadata } from "@/data/templeMetadata";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { cn } from "@/lib/utils";
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
+import { AhobilamCustomDetail } from "@/components/AhobilamCustomDetail";
+import { AhobilamCustomDarshan } from "@/components/AhobilamCustomDarshan";
+
+export const getShlokaAndTranslation = (deity?: string, baseSlug?: string) => {
+  const d = (deity || "").toLowerCase();
+  const s = (baseSlug || "").toLowerCase();
+
+  if (d.includes("krishna") || d.includes("radha") || s.includes("dwarka") || s.includes("banke") || s.includes("govind")) {
+    return {
+      shloka: "वसुदेवसुतं देवं कंसचाणूरमर्दनम् । देवकीपरमानन्दं कृष्णं वन्दे जगद्गुरुम् ॥",
+      title: "The Sacred Krishna Maha Mantra",
+      translation: "I bow to Lord Krishna, the son of Vasudeva, the killer of Kansa and Chanura, the supreme joy of Devaki, and the spiritual master of the universe."
+    };
+  }
+  if (d.includes("shiva") || d.includes("mahadev") || d.includes("linga") || s.includes("somnath") || s.includes("mallikarjuna") || s.includes("kedarnath") || s.includes("kashi") || s.includes("neelkanth") || s.includes("bhojeshwar") || s.includes("vaikom")) {
+    return {
+      shloka: "कर्पूरगौरं करुणावतारं संसारसारम् भुजगेन्द्रहारम् । सदावसन्तं हृदयारविन्दे भवं भवानीसहितं नमामि ॥",
+      title: "The Sacred Shiva Yajur Mantra",
+      translation: "White as camphor, the incarnation of compassion, the essence of the world, adorned with a snake king garland, always residing in the lotus of my heart, I bow to Shiva and Shakti together."
+    };
+  }
+  if (d.includes("hanuman") || d.includes("anjaneyar") || s.includes("balaji") || s.includes("sankat") || s.includes("salasar") || s.includes("mehandipur")) {
+    return {
+      shloka: "मनोजवं मारुततुल्यवेगं जितेन्द्रियं बुद्धिमतां वरिष्ठम् । वातात्मजं वानरयूथमुख्यं श्रीरामदूतं शरणं प्रपद्ये ॥",
+      title: "The Sacred Hanuman Mantra",
+      translation: "I take refuge in the messenger of Lord Rama, who is swift as thought, fast as wind, master of senses, foremost among the wise, son of the wind god, and leader of the monkey forces."
+    };
+  }
+  if (d.includes("rama") || d.includes("ram") || s.includes("ayodhya") || s.includes("kanak") || s.includes("kalaram") || s.includes("bhadrachalam")) {
+    return {
+      shloka: "रामाय रामभद्राय रामचन्द्राय वेधसे । रघुनाथाय नाथाय सीतायाः पतये नमः ॥",
+      title: "The Sacred Rama Mantra",
+      translation: "Salutations to Lord Rama, the protector of the righteous, the moon-like lord, the descendant of Raghu, the supreme master and the beloved husband of Sita."
+    };
+  }
+  if (d.includes("ganesha") || d.includes("ganapati") || s.includes("chintaman") || s.includes("dagadusheth") || s.includes("trinetra")) {
+    return {
+      shloka: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ । निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥",
+      title: "The Sacred Ganesha Maha Mantra",
+      translation: "O Lord Ganesha of the curved trunk and massive body, shining with the brilliance of a million suns, please make all my works free of obstacles always."
+    };
+  }
+  if (d.includes("durga") || d.includes("devi") || d.includes("shakti") || d.includes("mata") || d.includes("ambadevi") || d.includes("mariamman") || s.includes("mansa") || s.includes("chandi") || s.includes("naina") || s.includes("chintpurni") || s.includes("bhadrakali") || s.includes("tripura")) {
+    return {
+      shloka: "सर्वमङ्गलमङ्गल्ये शिवे सर्वार्थसाधिके । शरण्ये त्र्यम्बके गौरि नारायणि नमोऽस्तु ते ॥",
+      title: "The Sacred Devi Mantra",
+      translation: "Auspiciousness of all auspiciousness, the consort of Shiva, the fulfiller of all desires, the protector, the three-eyed one, the golden one, O Narayani, salutations to you."
+    };
+  }
+  return {
+    shloka: "ॐ असतो मा सद्गमय । तमसो मा ज्योतिर्गमय । मृत्योर्मा अमृतं गमय ॥",
+    title: "The Universal Upanishad Shloka",
+    translation: "Lead us from the unreal to the real, from darkness to light, and from death to immortality."
+  };
+};
+
+const getNearbyTemples = (currentBaseSlug: string) => {
+  const currentMetadata = templeMetadata[currentBaseSlug as keyof typeof templeMetadata];
+  const currentState = currentMetadata?.state || "";
+  const allKeys = Object.keys(templeMetadata).filter(k => k !== currentBaseSlug);
+  let matches = allKeys.filter(k => templeMetadata[k as keyof typeof templeMetadata]?.state === currentState);
+
+  if (matches.length < 3) {
+    const popularFallback = ["ahobilam", "somnath", "dwarkadhish", "kedarnath", "shankaracharya-temple-kashmir"];
+    for (const key of popularFallback) {
+      if (key !== currentBaseSlug && !matches.includes(key)) {
+        matches.push(key);
+      }
+      if (matches.length >= 3) break;
+    }
+  }
+
+  return matches.slice(0, 3).map(key => {
+    const data = templeMetadata[key as keyof typeof templeMetadata];
+    const name = key.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") + " Temple";
+    return {
+      slug: key,
+      name: data?.name || name,
+      state: data?.state || "",
+      image: data?.image || `https://images.unsplash.com/photo-1544013585-446a362cb705?q=80&w=800&fit=crop`,
+      deity: data?.deity || "",
+      category: data?.category || "Pilgrimage Site"
+    };
+  });
+};
 
 const TempleDetail = () => {
-  const { slug } = useParams();
-  const temple = getTemple(slug || "");
+  const { templeSlug, darshanSlug } = useParams();
+  const { pathname } = useLocation();
+  const [fileToRender, setFileToRender] = useState<string>("");
+  const isDarshanPage = pathname.includes("/darshan");
+  const [dynamicMeta, setDynamicMeta] = useState<{ title?: string; description?: string }>({});
+  const [activeSection, setActiveSection] = useState("introduction");
+  const [isBookingOpen, setIsBookingOpen] = useState(isDarshanPage);
+  const [bookingService, setBookingService] = useState<string | undefined>(isDarshanPage ? "Special Darshan" : undefined);
+  const [showSubheader, setShowSubheader] = useState(false);
 
-  if (!temple) {
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowSubheader(true);
+      } else {
+        setShowSubheader(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const baseSlug = templeSlug?.toLowerCase().replace(/-temple$/, "") || "";
+  const templeData = templeMetadata[baseSlug as keyof typeof templeMetadata];
+  const mainImage = templeData?.image || `/assets/images/temples/${baseSlug}.jpg`;
+
+  // Create a deduped gallery array (fallback to main image if none)
+  const rawGallery = templeData?.gallery && templeData.gallery.length > 0 ? templeData.gallery : [mainImage];
+  const gallery = Array.from(new Set(rawGallery)); // Remove duplicates
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [templeCount, setTempleCount] = useState(0);
+  const [yearsCount, setYearsCount] = useState(0);
+  const [pilgrimsCount, setPilgrimsCount] = useState(0);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const [hasAnimatedStats, setHasAnimatedStats] = useState(false);
+
+  // Lotus Petals canvas particle animation
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    const colors = ["#FFF8F0", "#F4A835", "#D85A30"];
+    const particles: Array<{
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+      color: string;
+      rotSpeed: number;
+      angle: number;
+    }> = [];
+
+    for (let i = 0; i < 30; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height - height,
+        size: Math.random() * 8 + 4,
+        speedX: Math.random() * 1 - 0.5,
+        speedY: Math.random() * 0.8 + 0.5,
+        opacity: Math.random() * 0.3 + 0.1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotSpeed: Math.random() * 0.02 - 0.01,
+        angle: Math.random() * Math.PI * 2,
+      });
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach((p) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.angle += p.rotSpeed;
+
+        if (p.y > height + 20 || p.x < -20 || p.x > width + 20) {
+          p.x = Math.random() * width;
+          p.y = -20;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.size, p.size / 2, 0, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.fill();
+        ctx.restore();
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimatedStats) {
+          setHasAnimatedStats(true);
+
+          let startT = 0;
+          const intervalT = setInterval(() => {
+            startT += 1;
+            setTempleCount(startT);
+            if (startT >= 3) clearInterval(intervalT);
+          }, 300);
+
+          let startY = 0;
+          const intervalY = setInterval(() => {
+            startY += 50;
+            setYearsCount(startY);
+            if (startY >= 1000) clearInterval(intervalY);
+          }, 60);
+
+          let startP = 0;
+          const intervalP = setInterval(() => {
+            startP += 2;
+            setPilgrimsCount(startP);
+            if (startP >= 50) clearInterval(intervalP);
+          }, 40);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimatedStats]);
+
+  // Helper to find file by slug
+  const findFile = useCallback((slug: string, fileList: string[]) => {
+    if (!slug) return undefined;
+    const searchTerm = slug.toLowerCase().replace(/-temple$/, "").replace(/-specialdarshan$/, "").replace(/-/g, " ").trim();
+    const searchWords = searchTerm.split(" ").filter(w => w.length > 2);
+    let match = fileList.find(f => {
+      const fileName = f.toLowerCase();
+      return searchWords.length > 0 ? fileName.includes(searchWords[0]) : fileName.includes(searchTerm);
+    });
+    if (!match && searchTerm.length > 3) {
+      const prefix = searchTerm.substring(0, 4);
+      match = fileList.find(f => f.toLowerCase().includes(prefix));
+    }
+    return match;
+  }, []);
+
+  useEffect(() => {
+    setDynamicMeta({});
+    if (isDarshanPage) {
+      const file = findFile(baseSlug, darshanFiles);
+      console.log(`[TempleDetail] Searching for Darshan file for ${baseSlug}: ${file || "Not Found"}`);
+      if (file) {
+        setFileToRender(`/assets/content/darshan/${file}`);
+      }
+    } else {
+      const file = findFile(baseSlug, templeFiles);
+      console.log(`[TempleDetail] Searching for Temple file for ${baseSlug}: ${file || "Not Found"}`);
+      if (file) {
+        setFileToRender(`/assets/content/temples/${file}`);
+      }
+    }
+  }, [baseSlug, isDarshanPage, findFile]);
+
+  useEffect(() => {
+    if (isDarshanPage) {
+      setIsBookingOpen(true);
+      setBookingService("Special Darshan");
+    }
+  }, [isDarshanPage]);
+
+  const displayTitle = baseSlug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5, rootMargin: "-100px 0px -50% 0px" }
+    );
+
+    const sections = ["introduction", "history", "timings", "services"];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // We can add logic here if needed
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    const sections = ["introduction", "history", "timings", "services"];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [fileToRender]);
+
+  const reviews = [
+    {
+      type: "video",
+      videoUrl: `https://images.unsplash.com/photo-1544013585-446a362cb705?auto=format&fit=crop&q=80&sig=${baseSlug}-review`,
+      name: "Achutam Nair",
+      location: "Bangalore",
+      avatar: "https://i.pravatar.cc/100?img=11",
+      feedback: "Great assisted darshan options. Felt deeply connected with the divine space without worrying about any queues or coordination. Strongly recommended!"
+    },
+    {
+      type: "text",
+      name: "Ramesh Chandra Bhatt",
+      location: "Nagpur",
+      avatar: "https://i.pravatar.cc/100?img=33",
+      feedback: "So many options for all the devotees. Great to get the grace of god from our homes. Most authentic and trustworthy service compared to others."
+    },
+    {
+      type: "text",
+      name: "Shivraj Dobhi",
+      location: "Agra",
+      avatar: "https://i.pravatar.cc/100?img=12",
+      feedback: "Liked the fact that we can book online else we have to travel to get everything done. Felt very nice to hear my name and gotra during the sankalp. Prasad was also received in time."
+    }
+  ];
+
+  const [activeReviewIndex, setActiveReviewIndex] = useState(0);
+
+  // Auto-play reviews slider
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveReviewIndex((prev) => (prev + 1) % reviews.length);
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [reviews.length]);
+
+  const onMetadata = useCallback((meta: { title?: string; description?: string }) => {
+    setDynamicMeta(meta);
+  }, []);
+
+  useEffect(() => {
+    (window as any).triggerDivineBooking = (service?: string) => {
+      setBookingService(service || "special-darshan");
+      setIsBookingOpen(true);
+    };
+    return () => {
+      delete (window as any).triggerDivineBooking;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (gallery.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % gallery.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [gallery.length]);
+
+  // Sticky subheader links
+  const sublinks = [
+    { id: "overview", label: "Temple Info", path: `/${baseSlug}-temple` },
+    { id: "darshan", label: "Special Darshan", path: `/${baseSlug}-temple/darshan` },
+    { id: "puja", label: "Pooja Sewa", path: `/${baseSlug}-temple/puja` },
+    { id: "prasad", label: "Prasad Delivery", path: `/${baseSlug}-temple/prasad` },
+    { id: "chadhava", label: "Chadhava", path: `/${baseSlug}-temple/chadhava` }
+  ];
+
+  if (!fileToRender) {
     return (
-      <div className="container-prose py-32 text-center">
-        <h1 className="font-serif-display text-4xl">Temple not found</h1>
-        <Button asChild className="mt-6"><Link to="/temples">View all temples</Link></Button>
+      <div className="container-prose py-40 text-center">
+        <div className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-orange-50 border-2 border-orange-100 mb-10">
+          <MapPin className="h-12 w-12 text-gold" />
+        </div>
+        <h1 className="font-serif text-5xl font-bold text-secondary mb-6">Sacred Journey in Progress</h1>
+        <p className="text-xl text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed font-medium">
+          We are currently preparing the divine details for <span className="text-primary font-bold">{displayTitle}</span>.
+        </p>
+        <Button asChild size="xl" className="bg-primary hover:bg-primary/90 text-white rounded-full px-12 shadow-gold"><Link to="/temples">Explore All Shrines</Link></Button>
       </div>
     );
   }
 
-  const aartiSchedule = [
-    { name: "Mangla Aarti", time: "6:30 AM" },
-    { name: "Morning Darshan", time: "7:00 AM – 1:00 PM" },
-    { name: "Temple Closed", time: "1:00 PM – 5:00 PM" },
-    { name: "Evening Darshan", time: "5:00 PM – 9:30 PM" },
-    { name: "Shayan Aarti", time: "9:00 PM" },
-  ];
+  const seoTitle = dynamicMeta.title || `${displayTitle} ${isDarshanPage ? "Special Darshan Booking" : "Temple Info"} | Vandan Darshan`;
+  const seoDesc = dynamicMeta.description || `Explore ${displayTitle} ${isDarshanPage ? "Special Darshan assistance, timings, and hassle-free booking" : "timings, history, and sacred information"}. Plan your spiritual journey today.`;
 
-  const faqs = [
-    { q: `How can I book VIP darshan at ${temple.name}?`, a: "You can book VIP darshan through Vandan Darshan by selecting your preferred date and time. Advance booking is recommended, especially during festivals and weekends." },
-    { q: "Is same-day darshan possible?", a: "Yes, same-day darshan may be available depending on slot availability. Call our team for live availability." },
-    { q: "How much time does darshan take?", a: "General darshan typically takes 1–3 hours during normal days. VIP darshan with our assistance is usually 15–30 minutes." },
-    { q: "What is the best time for darshan?", a: "Early morning (after Mangla Aarti) or late evening offers a peaceful, less crowded experience." },
-    { q: `क्या ${temple.name} में VIP दर्शन संभव है?`, a: "हाँ, VIP दर्शन उपलब्ध है। हमारी टीम आपकी मदद करेगी ताकि आप लंबी कतारों से बच सकें।" },
-  ];
-
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "TouristAttraction",
-      name: temple.name,
-      description: temple.tagline,
-      address: { "@type": "PostalAddress", addressLocality: temple.location, addressRegion: temple.state, addressCountry: "IN" },
-      image: temple.image,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-        { "@type": "ListItem", position: 2, name: "Temples", item: "/temples" },
-        { "@type": "ListItem", position: 3, name: temple.name },
-      ],
-    },
-  ];
+  const finalTitle = isDarshanPage
+    ? `${displayTitle} Temple Darshan Booking | VIP Assistance & Guided Tour`
+    : seoTitle;
+  const finalDesc = isDarshanPage
+    ? `Plan your ${displayTitle} Temple darshan with expert guidance. Explore timings, history, and queue management info. Book hassle-free VIP darshan and poojas today.`
+    : seoDesc;
 
   return (
     <>
-      <SEO
-        title={`${temple.name} Darshan – VIP Booking, Timings & Guide (2026)`}
-        description={`Book ${temple.name} VIP darshan, puja & prasad with Vandan Darshan. Timings, aarti schedule, complete guide. Skip queues — trusted devotee assistance.`}
-        image={temple.image}
-        jsonLd={jsonLd}
+      <SEO title={finalTitle} description={finalDesc} />
+      {isDarshanPage ? (
+        <AhobilamCustomDarshan
+          templeSlug={baseSlug}
+          docxPath={fileToRender}
+          onOpenBooking={(service) => {
+            setBookingService(service);
+            setIsBookingOpen(true);
+          }}
+        />
+      ) : (
+        <AhobilamCustomDetail
+          templeSlug={baseSlug}
+          docxPath={fileToRender}
+          onOpenBooking={(service) => {
+            setBookingService(service);
+            setIsBookingOpen(true);
+          }}
+        />
+      )}
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        defaultTemple={displayTitle}
+        defaultService={bookingService}
       />
-
-      {/* HERO */}
-      <section className="relative">
-        <div className="absolute inset-0">
-          <img src={temple.image} alt={`${temple.name}, ${temple.location}`} width={1920} height={1080} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/55 to-foreground/30" />
-        </div>
-        <div className="container-prose relative pt-24 pb-32 text-background">
-          <nav className="text-xs opacity-80 mb-6">
-            <Link to="/" className="hover:underline">Home</Link> / <Link to="/temples" className="hover:underline">Temples</Link> / <span>{temple.name}</span>
-          </nav>
-          <div className="flex items-center gap-2 text-sm">
-            <MapPin className="h-4 w-4" /> {temple.location}, {temple.state}
-          </div>
-          <h1 className="font-serif-display text-4xl md:text-6xl font-semibold mt-3 max-w-3xl leading-tight">
-            {temple.name} Darshan — VIP Booking, Timings & Complete Guide (2026)
-          </h1>
-          <p className="text-lg opacity-90 max-w-2xl mt-5">
-            Experience divine blessings at the sacred {temple.name}, dedicated to {temple.deity}. Whether you're planning a VIP Darshan, seeking quick entry, or a hassle-free spiritual journey — this guide covers it all.
-          </p>
-          <div className="flex flex-wrap gap-3 mt-8">
-            <Button asChild variant="divine" size="xl"><a href="#services">Book a Service <ArrowRight className="h-4 w-4" /></a></Button>
-            <Button asChild variant="outline" size="xl" className="bg-background/10 border-background/40 text-background hover:bg-background hover:text-foreground"><a href="#timings">View Timings</a></Button>
-          </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 mt-7 text-sm">
-            {["VIP Darshan Available", "Same-day Booking", "Trusted Across India"].map((b) => (
-              <span key={b} className="inline-flex items-center gap-1.5"><Check className="h-4 w-4 text-gold" /> {b}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* QUICK INFO */}
-      <section className="container-prose -mt-16 relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 bg-card border border-border rounded-2xl p-6 shadow-temple">
-          {[
-            { l: "Location", v: `${temple.location}, ${temple.state}`, i: MapPin },
-            { l: "Deity", v: temple.deity, i: Star },
-            { l: "VIP Darshan", v: "Available", i: Check },
-            { l: "Best Time", v: temple.bestTime, i: Calendar },
-            { l: "Timings", v: "Morning & Evening", i: Clock },
-            { l: "Peak Days", v: "Festivals", i: Star },
-            { l: "Support", v: "24×7 Help", i: Check },
-          ].map((q) => (
-            <div key={q.l} className="flex items-start gap-2.5">
-              <div className="h-9 w-9 shrink-0 grid place-items-center rounded-lg bg-gold-soft text-gold"><q.i className="h-4 w-4" /></div>
-              <div className="min-w-0">
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{q.l}</div>
-                <div className="text-sm font-medium truncate">{q.v}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* MAIN GRID */}
-      <div className="container-prose grid lg:grid-cols-3 gap-12 py-20">
-        <article className="lg:col-span-2 space-y-16">
-          {/* About */}
-          <section>
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">About</p>
-            <h2 className="font-serif-display text-3xl md:text-4xl font-semibold mt-2">About {temple.name}</h2>
-            <div className="divider-om"><span>॥ ॐ ॥</span></div>
-            <p className="text-muted-foreground leading-relaxed">
-              The {temple.name} is one of the most sacred pilgrimage destinations in India, dedicated to {temple.deity}. Every year, lakhs of pilgrims visit to seek blessings, experience divine energy, and immerse themselves in the spiritual legacy of this revered shrine.
-            </p>
-            <p className="text-muted-foreground leading-relaxed mt-4">
-              ✨ A visit to {temple.name} is not just a journey — it's a deeply spiritual experience that connects you with centuries of devotion.
-            </p>
-          </section>
-
-          {/* Timings */}
-          <section id="timings">
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Schedule</p>
-            <h2 className="font-serif-display text-3xl md:text-4xl font-semibold mt-2">Darshan Timings & Aarti Schedule</h2>
-            <div className="mt-6 overflow-hidden rounded-2xl border border-border">
-              <table className="w-full text-left">
-                <thead className="bg-muted">
-                  <tr>
-                    <th className="px-5 py-3 text-sm font-semibold">Darshan / Aarti</th>
-                    <th className="px-5 py-3 text-sm font-semibold">Timing</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {aartiSchedule.map((row, i) => (
-                    <tr key={row.name} className={i % 2 ? "bg-card" : "bg-background"}>
-                      <td className="px-5 py-4 font-medium">{row.name}</td>
-                      <td className="px-5 py-4 text-muted-foreground">{row.time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="text-sm text-muted-foreground mt-4">👉 Best time for darshan: early morning or late evening to avoid heavy crowds.</p>
-          </section>
-
-          {/* Services tabs (Darshan / Puja / Prasad / Chadhava) */}
-          <ServiceTabs temple={temple} />
-
-          {/* Why us comparison */}
-          <section>
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">The Vandan way</p>
-            <h2 className="font-serif-display text-3xl md:text-4xl font-semibold mt-2">Direct visit vs assisted darshan</h2>
-            <div className="mt-6 overflow-hidden rounded-2xl border border-border">
-              <table className="w-full text-left">
-                <thead className="bg-muted text-sm">
-                  <tr>
-                    <th className="px-5 py-3 font-semibold">Factor</th>
-                    <th className="px-5 py-3 font-semibold">Direct Visit</th>
-                    <th className="px-5 py-3 font-semibold text-primary">With Vandan Darshan</th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm">
-                  {[
-                    ["Waiting Time", "Long", "Minimal"],
-                    ["Guidance", "None", "Complete Support"],
-                    ["Convenience", "Low", "High"],
-                    ["Experience", "Uncertain", "Smooth & Peaceful"],
-                  ].map((r, i) => (
-                    <tr key={r[0]} className={i % 2 ? "bg-card" : "bg-background"}>
-                      <td className="px-5 py-3.5 font-medium">{r[0]}</td>
-                      <td className="px-5 py-3.5 text-muted-foreground">{r[1]}</td>
-                      <td className="px-5 py-3.5 text-primary font-medium">{r[2]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          {/* How to reach */}
-          <section>
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Travel</p>
-            <h2 className="font-serif-display text-3xl md:text-4xl font-semibold mt-2">How to reach {temple.name}</h2>
-            <div className="grid md:grid-cols-3 gap-5 mt-6">
-              {[
-                { i: Plane, t: "By Air", d: `Nearest airport with regular connectivity to ${temple.location}.` },
-                { i: Train, t: "By Train", d: `${temple.location} is well-connected to major cities by rail.` },
-                { i: Car, t: "By Road", d: `Good road network. Cabs and buses available from nearby hubs.` },
-              ].map((x) => (
-                <div key={x.t} className="p-6 rounded-2xl border border-border bg-card">
-                  <div className="h-10 w-10 grid place-items-center rounded-xl bg-gold-soft text-gold mb-3"><x.i className="h-5 w-5" /></div>
-                  <h3 className="font-semibold">{x.t}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">{x.d}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Guidelines */}
-          <section>
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Important</p>
-            <h2 className="font-serif-display text-3xl md:text-4xl font-semibold mt-2">Guidelines for devotees</h2>
-            <ul className="mt-6 grid sm:grid-cols-2 gap-3">
-              {[
-                "Wear modest, traditional attire",
-                "Follow temple rules & priest instructions",
-                "Mobile phones may be restricted inside",
-                "Arrive early during peak days",
-                "Carry a valid ID for bookings",
-                "Respect the sanctity of the shrine",
-              ].map((g) => (
-                <li key={g} className="flex items-start gap-2.5 text-sm text-foreground/80"><Check className="h-4 w-4 text-gold mt-0.5 shrink-0" /> {g}</li>
-              ))}
-            </ul>
-          </section>
-
-          {/* FAQs */}
-          <section>
-            <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">FAQs</p>
-            <h2 className="font-serif-display text-3xl md:text-4xl font-semibold mt-2">Frequently asked questions</h2>
-            <Accordion type="single" collapsible className="mt-6">
-              {faqs.map((f, i) => (
-                <AccordionItem key={i} value={`f-${i}`} className="border-border">
-                  <AccordionTrigger className="text-left font-medium">{f.q}</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </section>
-        </article>
-
-        {/* Sidebar */}
-        <aside className="lg:sticky lg:top-28 self-start" id="book">
-          <div className="bg-card border border-border rounded-2xl p-6 shadow-temple">
-            <h3 className="font-serif-display text-2xl font-semibold">Book {temple.name} darshan</h3>
-            <p className="text-sm text-muted-foreground mt-1">Limited VIP slots — request a callback now.</p>
-            <div className="mt-5"><BookingForm defaultTemple={temple.slug} compact /></div>
-          </div>
-
-          <div className="mt-6 p-6 rounded-2xl border border-gold/40 bg-gold-soft/40">
-            <p className="font-devanagari text-2xl text-gold leading-tight">"दर्शन से जीवन धन्य होता है"</p>
-            <p className="text-sm text-foreground/75 mt-3 italic">"From entering this sacred place to standing before the deity — it's a moment that stays with you forever. With our assistance, the journey becomes peaceful and divine."</p>
-            <p className="text-xs text-muted-foreground mt-3">— A real devotee</p>
-          </div>
-        </aside>
-      </div>
-
-      {/* Other temples */}
-      <section className="container-prose pb-24">
-        <h2 className="font-serif-display text-3xl font-semibold mb-8">Other sacred temples</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {temples.filter((t) => t.slug !== temple.slug).slice(0, 3).map((t) => (
-            <Link key={t.slug} to={`/temples/${t.slug}`} className="card-temple group block">
-              <div className="aspect-video overflow-hidden">
-                <img src={t.image} alt={t.name} loading="lazy" className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" />
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif-display text-xl font-semibold">{t.name}</h3>
-                <p className="text-xs text-muted-foreground mt-1">{t.location}, {t.state}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
     </>
   );
 };

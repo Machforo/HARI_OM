@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo-final.png";
 
 export const Footer = () => {
   return (
@@ -20,8 +20,8 @@ export const Footer = () => {
             Trusted spiritual concierge for darshan, puja, prasad and chadhava across India's most sacred temples.
           </p>
           <div className="flex gap-3 mt-5">
-            <a href="#" aria-label="Facebook" className="h-9 w-9 grid place-items-center rounded-full bg-accent text-foreground/70 hover:text-primary hover:bg-gold-soft transition"><Facebook className="h-4 w-4" /></a>
-            <a href="#" aria-label="Instagram" className="h-9 w-9 grid place-items-center rounded-full bg-accent text-foreground/70 hover:text-primary hover:bg-gold-soft transition"><Instagram className="h-4 w-4" /></a>
+            <a href="https://www.facebook.com/share/1D6e26vwF7/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-9 w-9 grid place-items-center rounded-full bg-accent text-foreground/70 hover:text-primary hover:bg-gold-soft transition"><Facebook className="h-4 w-4" /></a>
+            <a href="https://www.instagram.com/vandandarshanofficial?igsh=dXJ4eXY0bmQ1ZWZq&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-9 w-9 grid place-items-center rounded-full bg-accent text-foreground/70 hover:text-primary hover:bg-gold-soft transition"><Instagram className="h-4 w-4" /></a>
             <a href="#" aria-label="YouTube" className="h-9 w-9 grid place-items-center rounded-full bg-accent text-foreground/70 hover:text-primary hover:bg-gold-soft transition"><Youtube className="h-4 w-4" /></a>
           </div>
         </div>
@@ -31,9 +31,9 @@ export const Footer = () => {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/temples" className="hover:text-primary">All Temples</Link></li>
             <li><Link to="/services" className="hover:text-primary">Our Services</Link></li>
+            <li><Link to="/blogs" className="hover:text-primary">Spiritual Blogs</Link></li>
             <li><Link to="/about" className="hover:text-primary">About Us</Link></li>
             <li><Link to="/contact" className="hover:text-primary">Contact</Link></li>
-            <li><Link to="/book" className="hover:text-primary">Book Darshan</Link></li>
           </ul>
         </div>
 
@@ -51,9 +51,9 @@ export const Footer = () => {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-4">Reach Us</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            <li className="flex items-start gap-3"><Phone className="h-4 w-4 mt-0.5 text-gold" /><span>+91 99999 99999<br/>Mon–Sun, 8am – 9pm</span></li>
-            <li className="flex items-start gap-3"><Mail className="h-4 w-4 mt-0.5 text-gold" /><span>care@vandandarshan.com</span></li>
-            <li className="flex items-start gap-3"><MapPin className="h-4 w-4 mt-0.5 text-gold" /><span>Vandan Darshan Pvt. Ltd.<br/>India</span></li>
+            <li className="flex items-start gap-3"><Phone className="h-4 w-4 mt-0.5 text-gold" /><span>+91 89609 65151<br />WhatsApp / Calling</span></li>
+            <li className="flex items-start gap-3"><Mail className="h-4 w-4 mt-0.5 text-gold" /><span>seva@vandandarshan.com</span></li>
+            <li className="flex items-start gap-3"><MapPin className="h-4 w-4 mt-0.5 text-gold" /><span>Vandan Darshan Pvt. Ltd.<br />India</span></li>
           </ul>
         </div>
       </div>
