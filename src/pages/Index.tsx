@@ -179,7 +179,7 @@ const Index = () => {
             >
               <div className="aspect-video rounded-[3.5rem] overflow-hidden shadow-2xl relative">
                 <video
-                  src="/assets/videos/mp4.mp4"
+                  src="https://res.cloudinary.com/dz1nn391z/video/upload/v1779314335/vandan_darshan/apdtzglyfugnvu1eskrt.mp4"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
                   autoPlay
                   muted

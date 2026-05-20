@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
 const videos = [
-  "/assets/banner_videos/v1.mp4",
-  "/assets/banner_videos/v2.mp4",
-  "/assets/banner_videos/v3.mp4",
-  "/assets/banner_videos/v4.mp4"
+  "https://res.cloudinary.com/dz1nn391z/video/upload/v1779314280/vandan_darshan/ft7srmp9yn7sfrjfwb5k.mp4",
+  "https://res.cloudinary.com/dz1nn391z/video/upload/v1779314283/vandan_darshan/ezc5sqgkosfxbuuy6c9e.mp4",
+  "https://res.cloudinary.com/dz1nn391z/video/upload/v1779314332/vandan_darshan/llntuqzgzs9rvq9q5ysi.mp4"
 ];
 
 export const VideoBanner = () => {
