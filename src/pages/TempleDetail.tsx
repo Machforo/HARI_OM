@@ -118,7 +118,8 @@ const TempleDetail = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const baseSlug = templeSlug?.toLowerCase().replace(/-temple$/, "") || "";
+  const rawSlug = templeSlug || darshanSlug || "";
+  const baseSlug = rawSlug.toLowerCase().replace(/-temple$/, "").replace(/-vipdarsh$/, "");
   const templeData = templeMetadata[baseSlug as keyof typeof templeMetadata];
   const mainImage = templeData?.image || `/assets/images/temples/${baseSlug}.jpg`;
 
@@ -412,7 +413,7 @@ const TempleDetail = () => {
         <div className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-orange-50 border-2 border-orange-100 mb-10">
           <MapPin className="h-12 w-12 text-gold" />
         </div>
-        <h1 className="font-serif text-5xl font-bold text-secondary mb-6">Sacred Journey in Progress</h1>
+        <h1 className="font-serif text-5xl font-bold text-secondary mb-6">{displayTitle}</h1>
         <p className="text-xl text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed font-medium">
           We are currently preparing the divine details for <span className="text-primary font-bold">{displayTitle}</span>.
         </p>
@@ -431,6 +432,8 @@ const TempleDetail = () => {
     ? `Plan your ${displayTitle} Temple darshan with expert guidance. Explore timings, history, and queue management info. Book hassle-free VIP darshan and poojas today.`
     : seoDesc;
 
+  const h1Override = rawSlug.replace(/-vipdarsh$/, "");
+
   return (
     <>
       <SEO title={finalTitle} description={finalDesc} />
@@ -438,6 +441,7 @@ const TempleDetail = () => {
         <AhobilamCustomDarshan
           templeSlug={baseSlug}
           docxPath={fileToRender}
+          h1Override={h1Override}
           onOpenBooking={(service) => {
             setBookingService(service);
             setIsBookingOpen(true);
@@ -447,6 +451,7 @@ const TempleDetail = () => {
         <AhobilamCustomDetail
           templeSlug={baseSlug}
           docxPath={fileToRender}
+          h1Override={h1Override}
           onOpenBooking={(service) => {
             setBookingService(service);
             setIsBookingOpen(true);

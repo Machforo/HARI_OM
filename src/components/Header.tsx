@@ -10,13 +10,84 @@ import { templeList } from "@/data/temples";
 import { SearchOverlay } from "./SearchOverlay";
 import { motion, AnimatePresence } from "framer-motion";
 
+const popularTemples = [
+  { slug: "somnath", name: "Somnath Temple" },
+  { slug: "mahakaleshwar", name: "Mahakaleshwar" },
+  { slug: "kashi-vishwanath", name: "Kashi Vishwanath" },
+  { slug: "kedarnath", name: "Kedarnath" },
+  { slug: "tirupati-balaji", name: "Tirupati Balaji" },
+  { slug: "dwarkadhish", name: "Dwarkadhish" }
+];
+
+const getDynamicLink = (type: string | undefined, slug: string) => {
+  if (type === "darshan") return `/darshans/${slug}-vipdarsh`;
+  if (type === "puja") return `/puja/puja-at-${slug}`;
+  if (type === "prasad") return `/prasadam/prasadam-from-${slug}`;
+  if (type === "chadhava") return `/chadhava/chadhava-at-${slug}`;
+  return `/temples/${slug}`;
+};
+
 const nav = [
-  { to: "/", label: "Home" },
-  { to: "/temples", label: "Temples", isMegamenu: true },
-  { to: "/services", label: "Services", isDropdown: true },
-  { to: "/blogs", label: "Spiritual Blogs" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
+  { 
+    to: "/temples", 
+    label: "Temples", 
+    isMegamenu: true, 
+    type: "temples",
+    image: "https://upload.wikimedia.org/wikipedia/commons/1/10/Somanath_mandir_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+    title: "Discover Sacred Shrines",
+    popularCol: "Top Destinations",
+    sacredCol: "Jyotirlingas & Char Dham",
+    popTemples: popularTemples.slice(0, 3),
+    sacredTemples: popularTemples.slice(3, 6)
+  },
+  { 
+    to: "/darshan", 
+    label: "Sugam Darshan", 
+    isMegamenu: true, 
+    type: "darshan",
+    image: "https://discoverindiabyroad.com/wp-content/uploads/2020/06/Somnath-Aarti-Copy.jpg",
+    title: "Skip the Wait, See the Divine",
+    popularCol: "Quick Access",
+    sacredCol: "VIP Routing",
+    popTemples: [popularTemples[0], popularTemples[2], popularTemples[4]],
+    sacredTemples: [popularTemples[1], popularTemples[3], popularTemples[5]]
+  },
+  { 
+    to: "/prasad", 
+    label: "Sacred Prasadam", 
+    isMegamenu: true, 
+    type: "prasad",
+    image: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Prasadam2.jpg",
+    title: "Holy Offerings Delivered",
+    popularCol: "Most Ordered",
+    sacredCol: "Dry Fruits & Sweets",
+    popTemples: [popularTemples[5], popularTemples[2], popularTemples[1]],
+    sacredTemples: [popularTemples[3], popularTemples[4], popularTemples[0]]
+  },
+  { 
+    to: "/puja", 
+    label: "Puja", 
+    isMegamenu: true, 
+    type: "puja",
+    image: "https://artofpuja.com/cdn/shop/articles/navratri-puja-samagri-list-durga-puja-items-art-of-puja_jpg.png?v=1772880680",
+    title: "Authentic Rituals",
+    popularCol: "Sankalp Pujas",
+    sacredCol: "Maha Archanas",
+    popTemples: [popularTemples[1], popularTemples[0], popularTemples[3]],
+    sacredTemples: [popularTemples[4], popularTemples[2], popularTemples[5]]
+  },
+  { 
+    to: "/chadhava", 
+    label: "Sanatan Offerings", 
+    isMegamenu: true, 
+    type: "chadhava",
+    image: "https://vama.app/_next/image?url=https%3A%2F%2Fd1e93yen0ejier.cloudfront.net%2Fuploads%2FCACHE%2Fimages%2Fchadhava%2Fhow%2Flg%2F37afffffcbf03f6bbadeaf1faa1c36f4760dde7e%2Fe4d6e6bdfc870d4de50e8de009baddbc.png&w=3840&q=75",
+    title: "Express Your Devotion",
+    popularCol: "Vastram Offerings",
+    sacredCol: "Floral Shringar",
+    popTemples: [popularTemples[4], popularTemples[1], popularTemples[2]],
+    sacredTemples: [popularTemples[5], popularTemples[0], popularTemples[3]]
+  },
 ];
 
 export const Header = () => {
@@ -90,7 +161,7 @@ export const Header = () => {
               </div>
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
               {nav.map((n) => (
                 <div 
                   key={n.to} 
@@ -100,15 +171,15 @@ export const Header = () => {
                     to={n.to}
                     className={cn(
                       "text-[14px] font-bold transition-all hover:text-primary flex items-center gap-1 py-4",
-                      pathname === n.to || (n.isMegamenu && pathname.startsWith("/temples")) 
+                      pathname.startsWith(n.to) 
                         ? "text-primary" 
                         : (shouldBeSolid ? "text-foreground/90" : "text-white hover:text-gold")
                     )}
                   >
                     {n.label}
-                    {(n.isMegamenu || n.isDropdown) && <ChevronDown className={cn("h-4 w-4", shouldBeSolid ? "opacity-70" : "opacity-90")} />}
+                    {n.isMegamenu && <ChevronDown className={cn("h-4 w-4", shouldBeSolid ? "opacity-70" : "opacity-90")} />}
                   </Link>
-                  {(pathname === n.to || (n.isMegamenu && pathname.startsWith("/temples"))) && (
+                  {pathname.startsWith(n.to) && (
                     <motion.span 
                       layoutId="headerNav"
                       className="absolute bottom-1 left-0 right-0 h-0.5 bg-gradient-gold rounded-full" 
@@ -117,55 +188,61 @@ export const Header = () => {
 
                   {/* MEGAMENU: Full Width */}
                   {n.isMegamenu && (
-                    <div className="fixed top-[calc(100%+0px)] left-0 right-0 w-screen bg-white border-b border-border shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 translate-y-2 group-hover:translate-y-0 flex z-[1000] min-h-[450px]">
-                      <div className="w-[35%] relative overflow-hidden group/img bg-secondary">
-                        <img src="https://discoverindiabyroad.com/wp-content/uploads/2020/06/Somnath-Aarti-Copy.jpg" className="h-full w-full object-cover transition-transform duration-1000 group-hover/img:scale-110 opacity-60" alt="Featured Temple" />
+                    <div className="fixed top-[calc(100%+0px)] left-0 right-0 w-screen bg-white border-b border-border shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 translate-y-2 group-hover:translate-y-0 flex z-[1000] min-h-[400px]">
+                      <div className="w-[30%] relative overflow-hidden group/img bg-secondary hidden lg:block">
+                        <img src={n.image} className="h-full w-full object-cover transition-transform duration-1000 group-hover/img:scale-110 opacity-60" alt={n.label} />
                         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/20 to-transparent" />
-                        <div className="absolute bottom-12 left-12 right-12">
-                           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-4 block">Featured Shrine</span>
-                           <h4 className="font-serif-display text-4xl font-bold text-white mb-6 leading-tight">The Golden Grace of Somnath</h4>
-                           <p className="text-white/70 text-sm mb-8 font-medium leading-relaxed">Experience the first among twelve Jyotirlingas by the Arabian Sea.</p>
+                        <div className="absolute bottom-12 left-10 right-10">
+                           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-4 block">{n.label}</span>
+                           <h4 className="font-serif-display text-3xl font-bold text-white mb-4 leading-tight">{n.title}</h4>
                            <Button className="bg-primary hover:bg-white hover:text-secondary border-none text-white rounded-full px-8 h-12 font-black uppercase tracking-widest text-[10px]" asChild>
-                             <Link to="/somnath-temple">Explore Now <ArrowRight className="h-4 w-4 ml-2" /></Link>
+                             <Link to={n.to}>View All <ArrowRight className="h-4 w-4 ml-2" /></Link>
                            </Button>
                         </div>
                       </div>
                       
-                      <div className="w-[65%] p-16 grid grid-cols-3 gap-12 bg-white">
-                        <div className="container-prose col-span-3 grid grid-cols-3 gap-12">
+                      <div className="w-full lg:w-[70%] p-10 lg:p-16 bg-white">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
                           <div>
-                            <div className="flex items-center gap-3 mb-10 border-b border-border/40 pb-4">
+                            <div className="flex items-center gap-3 mb-8 border-b border-border/40 pb-4">
                               <MapPin className="h-4 w-4 text-gold" />
-                              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">Divine Destinations</h4>
+                              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">{n.popularCol}</h4>
                             </div>
-                            <ul className="space-y-5">
-                              <li><Link to="/temples?category=Jyotirlinga" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">12 Jyotirlingas <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/temples?category=Char Dham" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Char Dham Yatra <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/temples?category=Shakti Peeth" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Shakti Peeths <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/temples" className="text-sm font-bold text-primary hover:underline transition-all">View All Shrines</Link></li>
+                            <ul className="space-y-4">
+                              {n.popTemples?.map(t => (
+                                <li key={t.slug}>
+                                  <Link to={getDynamicLink(n.type, t.slug)} className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">
+                                    {t.name} <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
+                                  </Link>
+                                </li>
+                              ))}
+                              <li><Link to={n.to} className="text-sm font-bold text-primary hover:underline transition-all">View All 97+ Temples</Link></li>
                             </ul>
                           </div>
 
                           <div>
-                            <div className="flex items-center gap-3 mb-10 border-b border-border/40 pb-4">
+                            <div className="flex items-center gap-3 mb-8 border-b border-border/40 pb-4">
                               <Sparkles className="h-4 w-4 text-gold" />
-                              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">Sacred Services</h4>
+                              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">{n.sacredCol}</h4>
                             </div>
-                            <ul className="space-y-5">
-                              <li><Link to="/darshan" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Special Darshan <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/puja" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Pooja Sewa <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/prasad" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Prasad Delivery <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/chadhava" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Online Chadhava <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
+                            <ul className="space-y-4">
+                              {n.sacredTemples?.map(t => (
+                                <li key={t.slug}>
+                                  <Link to={getDynamicLink(n.type, t.slug)} className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">
+                                    {t.name} <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
+                                  </Link>
+                                </li>
+                              ))}
                             </ul>
                           </div>
 
                           <div>
-                            <div className="flex items-center gap-3 mb-10 border-b border-border/40 pb-4">
+                            <div className="flex items-center gap-3 mb-8 border-b border-border/40 pb-4">
                               <Search className="h-4 w-4 text-gold" />
                               <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">Spiritual Resources</h4>
                             </div>
-                            <ul className="space-y-5">
-                              <li><Link to="/blogs" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Spiritual Blogs <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
+                            <ul className="space-y-4">
+                              <li><Link to="/media/blogs" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Spiritual Blogs <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
                               <li><Link to="/about" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Our Mission <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
                               <li><Link to="/contact" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Contact Support <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
                               <li><Link to="/book" className="text-sm font-black text-gold uppercase tracking-widest mt-4 block hover:underline transition-all">Book Your Yatra ॥</Link></li>
@@ -173,22 +250,6 @@ export const Header = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-
-                  {/* DROPDOWN: Services */}
-                  {n.isDropdown && (
-                    <div className="absolute top-full left-0 w-64 bg-white border border-border shadow-xl rounded-2xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 p-4">
-                      <ul className="space-y-1">
-                        {["Special Darshan", "Pooja Services", "Prasad Delivery", "Yatra Packages"].map(item => (
-                          <li key={item}>
-                            <Link to="/services" className="flex items-center gap-3 p-3 rounded-xl hover:bg-gold-soft/30 transition-colors group/link">
-                              <div className="h-8 w-8 rounded-lg bg-gold/10 flex items-center justify-center text-gold group-hover/link:bg-gold group-hover/link:text-white transition-colors font-black text-[10px]">॥</div>
-                              <span className="text-sm font-bold text-secondary">{item}</span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
                     </div>
                   )}
                 </div>

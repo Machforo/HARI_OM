@@ -17,7 +17,7 @@ export const BlogPreview = () => {
             <p className="text-muted-foreground mt-6 font-medium leading-relaxed">Deepen your understanding of ancient traditions, rituals, and the celestial world through our curated blogs.</p>
           </div>
           <Button asChild variant="outline" className="border-gold text-gold hover:bg-gold hover:text-white rounded-full px-8">
-            <Link to="/blogs">Explore All Blogs <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            <Link to="/media">Explore All Blogs <ArrowRight className="ml-2 h-4 w-4" /></Link>
           </Button>
         </div>
 
@@ -57,7 +57,7 @@ export const BlogPreview = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-8 left-8 right-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
-                  <Link to={`/blogs/${blog.slug}`} className="inline-block text-[10px] font-black uppercase tracking-widest text-gold bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 hover:bg-gold hover:text-white transition-colors">
+                  <Link to={`/media/blogs/${blog.slug}`} className="inline-block text-[10px] font-black uppercase tracking-widest text-gold bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 hover:bg-gold hover:text-white transition-colors">
                     Read Chronicles ॥
                   </Link>
                 </div>
@@ -74,7 +74,7 @@ export const BlogPreview = () => {
                 <p className="text-muted-foreground text-base line-clamp-2 leading-relaxed mb-6 font-medium">
                   {blog.excerpt}
                 </p>
-                <Link to={`/blogs/${blog.slug}`} className="inline-flex items-center text-xs font-black uppercase tracking-[0.3em] text-primary gap-2 group/btn">
+                <Link to={`/media/blogs/${blog.slug}`} className="inline-flex items-center text-xs font-black uppercase tracking-[0.3em] text-primary gap-2 group/btn">
                   Read Article <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                 </Link>
               </div>

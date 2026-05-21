@@ -139,7 +139,7 @@ const SpiritualMedia = () => {
                     viewport={{ once: true }}
                     className="group cursor-pointer"
                   >
-                    <Link to={`/blogs/${item.slug}`}>
+                    <Link to={`/media/blogs/${item.slug}`}>
                       <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden mb-10 shadow-soft group-hover:shadow-temple transition-all duration-700">
                         <img
                           src={item.image}

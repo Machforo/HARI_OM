@@ -14,9 +14,10 @@ interface AhobilamCustomDetailProps {
   onOpenBooking: (serviceName: string) => void;
   templeSlug?: string;
   docxPath?: string;
+  h1Override?: string;
 }
 
-export const AhobilamCustomDetail = ({ onOpenBooking, templeSlug = "ahobilam", docxPath }: AhobilamCustomDetailProps) => {
+export const AhobilamCustomDetail = ({ onOpenBooking, templeSlug = "ahobilam", docxPath, h1Override }: AhobilamCustomDetailProps) => {
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
 
@@ -325,7 +326,7 @@ export const AhobilamCustomDetail = ({ onOpenBooking, templeSlug = "ahobilam", d
               transition={{ duration: 1.2, delay: 0.3 }}
               className="font-serif text-5xl md:text-8xl font-bold tracking-tight text-white leading-tight"
             >
-              {displayTitle}
+              {h1Override || displayTitle}
             </motion.h1>
             <p className="font-serif text-xl md:text-3.5xl font-light italic text-[#E6A817]/90">
               {config.subtitle}

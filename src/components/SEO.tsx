@@ -5,10 +5,11 @@ interface SEOProps {
   description: string;
   canonical?: string;
   image?: string;
+  keywords?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-export const SEO = ({ title, description, canonical, image, jsonLd }: SEOProps) => {
+export const SEO = ({ title, description, canonical, image, keywords, jsonLd }: SEOProps) => {
   const fullTitle = title.length > 60 ? title.slice(0, 57) + "..." : title;
   const desc = description.length > 160 ? description.slice(0, 157) + "..." : description;
   const url = canonical || (typeof window !== "undefined" ? window.location.href : "");
@@ -17,6 +18,7 @@ export const SEO = ({ title, description, canonical, image, jsonLd }: SEOProps) 
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={desc} />
+      {keywords && <meta name="keywords" content={keywords} />}
       {url && <link rel="canonical" href={url} />}
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={desc} />

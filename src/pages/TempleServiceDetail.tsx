@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { DocxRenderer } from "@/components/DocxRenderer";
 import { templeFiles, darshanFiles } from "@/data/templeList";
+import { generateServiceContent } from "@/lib/contentGenerator";
 
 const serviceTypes = {
   puja: {
@@ -84,14 +85,21 @@ function getShlokaAndTranslation(deity: string | undefined, slug: string) {
   };
 }
 
-const TempleServiceDetail = () => {
+const TempleServiceDetail = ({ type: propType }: { type?: keyof typeof serviceTypes }) => {
   const { templeSlug, serviceType } = useParams();
-  const type = serviceType as keyof typeof serviceTypes;
+  const type = propType || (serviceType as keyof typeof serviceTypes) || 'puja';
   const service = serviceTypes[type] || serviceTypes.puja;
 
-  const baseSlug = templeSlug?.toLowerCase().replace(/-temple$/, "") || "";
+  const baseSlug = templeSlug?.toLowerCase()
+    .replace(/^puja-at-/, "")
+    .replace(/^prasadam-from-/, "")
+    .replace(/^chadhava-at-/, "")
+    .replace(/-vipdarsh$/, "")
+    .replace(/-temple$/, "") || "";
   const templeData = templeMetadata[baseSlug as keyof typeof templeMetadata];
   const templeName = templeData?.name || baseSlug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+
+  const dynamicContent = generateServiceContent(type as string, templeName, templeData || {});
 
   const mainImage = templeData?.image || `/assets/images/temples/${baseSlug}.jpg`;
   const rawGallery = templeData?.gallery && templeData.gallery.length > 0 ? templeData.gallery : [mainImage];
@@ -286,11 +294,8 @@ const TempleServiceDetail = () => {
                 transition={{ duration: 1.2, delay: 0.3 }}
                 className="font-serif text-5xl md:text-8xl font-bold tracking-tight text-white leading-tight"
               >
-                {service.title}
+                {service.title} at {templeName}
               </motion.h1>
-              <p className="font-serif text-xl md:text-3.5xl font-light italic text-[#E6A817]/90">
-                at {templeName}
-              </p>
               <p className="text-sm md:text-base text-white/70 max-w-2xl mx-auto leading-relaxed mt-4 font-medium">
                 {service.tagline}
               </p>
@@ -427,16 +432,16 @@ const TempleServiceDetail = () => {
                 <span className="text-xs uppercase tracking-[0.25em] text-[#D85A30] font-black">Spiritual Coordination</span>
                 <h2 className="font-serif text-4xl md:text-5.5xl font-bold text-[#1A1240] leading-tight">
                   Authentic {service.title} Sewa <br />
-                  <span className="text-[#D85A30] italic font-light italic-font">at the Holy Shrine</span>
+                  <span className="text-[#D85A30] italic font-light italic-font">at {templeName}</span>
                 </h2>
                 <div className="h-0.5 w-20 bg-[#E6A817] rounded-full my-2" />
 
                 <div className="space-y-6 text-[#2E2520]/80 text-sm md:text-base leading-relaxed font-medium">
-                  <p>
-                    {service.description} We coordinate with verified local priests at {templeName} to ensure your prayers are voiced exactly according to traditional Vedic norms, complete with gotra invocation and authentic sankalp.
+                  <p className="whitespace-pre-line leading-loose text-justify">
+                    {dynamicContent.mainDescription}
                   </p>
                   <div className="border-l-4 border-[#E6A817] pl-6 py-2 italic text-[#1A1240] bg-[#E6A817]/5 rounded-r-xl">
-                    Every seva is organized with deep sincerity. Devotees receive digital updates, holy photos, and fast physical delivery of blessed dry-fruit prasadam direct from the shrine.
+                    Every seva at {templeName} is organized with deep sincerity. Devotees receive digital updates, holy photos, and fast physical delivery of blessed items direct from the shrine.
                   </div>
                 </div>
 
@@ -459,31 +464,23 @@ const TempleServiceDetail = () => {
         <section className="py-24 bg-white relative border-y border-border/20">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-              <span className="text-xs uppercase tracking-widest text-[#D85A30] font-black">Sacred Power</span>
+              <span className="text-xs uppercase tracking-widest text-[#D85A30] font-black">Sacred Power of {templeData?.deity || 'the Deity'}</span>
               <h3 className="font-serif text-3.5xl md:text-4.5xl font-bold text-[#1A1240]">Divine Benefits & Blessings</h3>
-              <p className="text-muted-foreground text-sm font-semibold">Participating in these holy rituals releases powerful cosmic alignment and positive aura.</p>
+              <p className="text-muted-foreground text-sm font-semibold">Participating in these holy rituals at {templeName} releases powerful cosmic alignment and positive aura.</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="flex flex-col gap-4 p-8 bg-[#FFF8F0]/30 rounded-3xl border border-border/40 hover:border-[#E6A817] hover:shadow-xl transition-all">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#D85A30]/10 text-[#D85A30] rounded-full flex items-center justify-center shrink-0">
-                    <Sparkles className="h-6 w-6" />
+            <div className="grid md:grid-cols-3 gap-8">
+              {dynamicContent.benefits.map((benefit, i) => (
+                <div key={i} className="flex flex-col gap-4 p-8 bg-[#FFF8F0]/30 rounded-3xl border border-border/40 hover:border-[#E6A817] hover:shadow-xl transition-all">
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="w-12 h-12 bg-[#D85A30]/10 text-[#D85A30] rounded-full flex items-center justify-center shrink-0">
+                      {i === 0 ? <Sparkles className="h-6 w-6" /> : i === 1 ? <Flame className="h-6 w-6" /> : <Heart className="h-6 w-6" />}
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-[#1A1240] leading-tight">{benefit.title}</h4>
                   </div>
-                  <h4 className="font-serif text-xl font-bold text-[#1A1240] leading-tight">Peace & Obstacle Removal</h4>
+                  <p className="text-sm text-[#2E2520]/80 leading-relaxed font-medium">{benefit.desc}</p>
                 </div>
-                <p className="text-sm text-[#2E2520]/80 leading-relaxed font-medium">Attract positive vibrations to your home, eliminate domestic obstacles, and experience complete spiritual peace.</p>
-              </div>
-
-              <div className="flex flex-col gap-4 p-8 bg-[#FFF8F0]/30 rounded-3xl border border-border/40 hover:border-[#E6A817] hover:shadow-xl transition-all">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#D85A30]/10 text-[#D85A30] rounded-full flex items-center justify-center shrink-0">
-                    <Heart className="h-6 w-6" />
-                  </div>
-                  <h4 className="font-serif text-xl font-bold text-[#1A1240] leading-tight">Family Health & Longevity</h4>
-                </div>
-                <p className="text-sm text-[#2E2520]/80 leading-relaxed font-medium">Invoke supreme health, physical healing, and divine shields to safeguard your loved ones from negative elements.</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -498,29 +495,20 @@ const TempleServiceDetail = () => {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-3xl p-8 border border-border/30 shadow-sm flex flex-col justify-between min-h-[220px]">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-[#D85A30] text-white font-bold rounded flex items-center justify-center text-sm shadow-md">1</div>
-                  <h4 className="font-serif text-lg font-bold text-[#1A1240]">Select & Share Details</h4>
+              {dynamicContent.process.map((proc, i) => (
+                <div key={i} className="bg-white rounded-3xl p-8 border border-border/30 shadow-sm flex flex-col justify-between min-h-[220px] hover:border-[#D85A30] transition-colors group">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={cn(
+                      "w-8 h-8 text-white font-bold rounded flex items-center justify-center text-sm shadow-md group-hover:scale-110 transition-transform",
+                      i === 0 ? "bg-[#D85A30]" : i === 1 ? "bg-[#6B1A1A]" : "bg-[#E6A817]"
+                    )}>
+                      {i + 1}
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-[#1A1240]">{proc.step}</h4>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed font-semibold">{proc.desc}</p>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-semibold">Choose your specific seva and share your name, family gotra, and birth nakshatra for authentic invocation.</p>
-              </div>
-
-              <div className="bg-white rounded-3xl p-8 border border-border/30 shadow-sm flex flex-col justify-between min-h-[220px]">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-[#6B1A1A] text-white font-bold rounded flex items-center justify-center text-sm shadow-md">2</div>
-                  <h4 className="font-serif text-lg font-bold text-[#1A1240]">Sankalp & Ritual</h4>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-semibold">Certified temple priests perform the rituals on-ground. Traditional slokas and mantras are chanted in your name.</p>
-              </div>
-
-              <div className="bg-white rounded-3xl p-8 border border-border/30 shadow-sm flex flex-col justify-between min-h-[220px]">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-[#E6A817] text-white font-bold rounded flex items-center justify-center text-sm shadow-md">3</div>
-                  <h4 className="font-serif text-lg font-bold text-[#1A1240]">Blessed Prasadam</h4>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-semibold">Secure, hygienic packaging of physical temple sweets, dry-fruits, and holy sacred thread delivered to your home.</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>

@@ -14,9 +14,10 @@ interface AhobilamCustomDarshanProps {
   onOpenBooking: (service: string) => void;
   templeSlug?: string;
   docxPath?: string;
+  h1Override?: string;
 }
 
-export const AhobilamCustomDarshan = ({ onOpenBooking, templeSlug = "ahobilam", docxPath }: AhobilamCustomDarshanProps) => {
+export const AhobilamCustomDarshan = ({ onOpenBooking, templeSlug = "ahobilam", docxPath, h1Override }: AhobilamCustomDarshanProps) => {
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
   const [activeSection, setActiveSection] = useState("overview");
   const [showSubheader, setShowSubheader] = useState(false);
@@ -213,7 +214,7 @@ export const AhobilamCustomDarshan = ({ onOpenBooking, templeSlug = "ahobilam", 
                 transition={{ duration: 0.8 }}
                 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-tight"
               >
-                {displayTitle} <br />
+                {h1Override || displayTitle} <br />
                 <span className="text-[#E6A817] italic font-light italic-font">Darshan & Yatra Support</span>
               </motion.h1>
               <p className="text-white/80 max-w-xl leading-relaxed text-sm md:text-base font-medium">

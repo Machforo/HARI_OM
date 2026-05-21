@@ -43,6 +43,9 @@ function docxStaticPlugin(): Plugin {
   };
 }
 
+import { VitePWA } from 'vite-plugin-pwa';
+import { partytownVite } from '@builder.io/partytown/utils';
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
@@ -56,6 +59,18 @@ export default defineConfig(({ mode }) => ({
     docxStaticPlugin(),
     react(),
     mode === "development" && componentTagger(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Vandan Darshan',
+        short_name: 'VandanDarshan',
+        theme_color: '#d8721f',
+        icons: []
+      }
+    }),
+    partytownVite({
+      dest: path.join(process.cwd(), 'public', '~partytown'),
+    }),
   ].filter(Boolean),
   resolve: {
     alias: {

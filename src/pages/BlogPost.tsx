@@ -17,7 +17,7 @@ const BlogPost = () => {
     return (
       <div className="container-prose py-40 text-center">
         <h1 className="text-4xl font-bold mb-8">Article not found</h1>
-        <Button onClick={() => navigate("/blogs")}>Back to Blogs</Button>
+        <Button onClick={() => navigate("/media")}>Back to Media</Button>
       </div>
     );
   }
@@ -45,7 +45,7 @@ const BlogPost = () => {
         <div className="container-prose relative z-20">
           <div className="max-w-4xl">
             <Link 
-              to="/blogs" 
+              to="/media" 
               className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-12 hover:text-white transition-all bg-secondary/20 backdrop-blur-md px-6 py-2.5 rounded-full border border-white/10 hover:bg-secondary/40"
             >
               <ArrowLeft className="h-4 w-4" /> Back to Spiritual Media
@@ -65,7 +65,7 @@ const BlogPost = () => {
                   </span>
                 )}
               </div>
-              <h1 className="font-serif-display text-5xl md:text-8xl font-bold text-white leading-[1.1] tracking-tight drop-shadow-lg">
+              <h1 className="font-serif-display text-4xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] tracking-tight drop-shadow-lg">
                 {blog.title}
               </h1>
             </motion.div>
@@ -111,8 +111,8 @@ const BlogPost = () => {
       </section>
 
       {/* MAIN CONTENT SECTION */}
-      <section className="py-24 bg-white relative">
-        <div className="container-prose grid lg:grid-cols-3 gap-24">
+      <section className="py-16 md:py-24 bg-white relative">
+        <div className="container-prose grid lg:grid-cols-3 gap-16 md:gap-24">
           {/* ARTICLE */}
           <article className="lg:col-span-2 space-y-8">
             {/* EXCERPT HIGHLIGHT */}
@@ -122,14 +122,14 @@ const BlogPost = () => {
               transition={{ delay: 0.2 }}
               className="bg-gradient-to-r from-primary/10 to-gold/10 border-l-4 border-primary p-8 rounded-xl"
             >
-              <p className="font-serif-display text-2xl font-bold text-secondary leading-relaxed italic">
+              <p className="font-serif-display text-xl md:text-2xl font-bold text-secondary leading-relaxed italic">
                 "{blog.excerpt}"
               </p>
             </motion.div>
 
             {/* CONTENT */}
             <div 
-              className="prose prose-lg max-w-none docx-content blog-content font-medium text-muted-foreground/90 leading-[1.9] space-y-6"
+              className="prose prose-base md:prose-lg max-w-none docx-content blog-content font-medium text-muted-foreground/90 leading-[1.9] space-y-6"
               dangerouslySetInnerHTML={{ __html: blog.content }}
             />
 
@@ -138,9 +138,9 @@ const BlogPost = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-gold/5 border border-gold/20 rounded-3xl p-12"
+              className="bg-gold/5 border border-gold/20 rounded-3xl p-6 md:p-12"
             >
-              <h2 className="font-serif-display text-3xl font-bold text-secondary mb-8 flex items-center gap-3">
+              <h2 className="font-serif-display text-2xl md:text-3xl font-bold text-secondary mb-6 md:mb-8 flex items-center gap-3">
                 <span className="h-10 w-10 rounded-full bg-gold text-white flex items-center justify-center text-lg">✨</span>
                 Key Takeaways
               </h2>
@@ -160,7 +160,7 @@ const BlogPost = () => {
                     className="flex gap-4"
                   >
                     <span className="text-gold font-bold text-lg flex-shrink-0">→</span>
-                    <span className="text-secondary font-medium">{item}</span>
+                    <span className="text-secondary font-medium text-sm md:text-base">{item}</span>
                   </motion.li>
                 ))}
               </ul>
@@ -210,9 +210,9 @@ const BlogPost = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-cream rounded-3xl p-8 border border-border/40"
+              className="bg-gradient-cream rounded-3xl p-6 md:p-8 border border-border/40"
             >
-              <div className="flex gap-6 items-start">
+              <div className="flex flex-col sm:flex-row gap-6 items-start">
                 <div className="h-20 w-20 rounded-full bg-secondary/10 flex items-center justify-center text-secondary flex-shrink-0">
                   <User className="h-10 w-10" />
                 </div>
@@ -261,7 +261,7 @@ const BlogPost = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-gold/20 to-primary/10 p-10 rounded-[3rem] border border-gold/20 relative overflow-hidden"
+                className="bg-gradient-to-br from-gold/20 to-primary/10 p-6 md:p-10 rounded-[3rem] border border-gold/20 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 p-8 opacity-5">
                   <Sparkles className="h-32 w-32 text-gold" />
@@ -297,7 +297,7 @@ const BlogPost = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="border border-border/40 rounded-[3rem] p-8"
+                  className="border border-border/40 rounded-[2rem] md:rounded-[3rem] p-6 md:p-8"
                 >
                   <h3 className="font-serif-display text-2xl font-bold text-secondary mb-6 flex items-center gap-2">
                     <BookOpen className="h-6 w-6 text-gold" />
@@ -307,7 +307,7 @@ const BlogPost = () => {
                     {relatedArticles.map((article) => (
                       <Link
                         key={article.id}
-                        to={`/blogs/${article.slug}`}
+                        to={`/media/blogs/${article.slug}`}
                         className="group block p-4 rounded-xl border border-border/40 hover:border-primary hover:bg-primary/5 transition-all"
                       >
                         <p className="font-bold text-secondary text-sm group-hover:text-primary transition-colors line-clamp-2">
@@ -325,7 +325,7 @@ const BlogPost = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-secondary p-10 rounded-[3rem] text-white relative overflow-hidden shadow-temple"
+                className="bg-secondary p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] text-white relative overflow-hidden shadow-temple"
               >
                 <div className="absolute inset-0 opacity-10 bg-[url('/assets/images/temples/pattern.png')] bg-repeat" />
                 <div className="relative z-10 text-center space-y-6">
@@ -367,7 +367,7 @@ const BlogPost = () => {
                   viewport={{ once: true }}
                   className="bg-white rounded-3xl overflow-hidden shadow-soft hover:shadow-temple transition-all group"
                 >
-                  <Link to={`/blogs/${article.slug}`}>
+                  <Link to={`/media/blogs/${article.slug}`}>
                     <div className="relative aspect-video overflow-hidden">
                       <img
                         src={article.image}
