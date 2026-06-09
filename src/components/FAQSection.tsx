@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,10 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     question: "What exactly does Vandan Darshan provide?",
-    answer: "We provide comprehensive spiritual assistance including Special Darshan bookings, personalized Puja arrangements, Prasad delivery, and full travel logistics to ensure a peaceful and focused pilgrimage."
+    answer: "We provide comprehensive spiritual assistance including Sugam Darshan bookings, personalized Puja arrangements, Prasad delivery, and full travel logistics to ensure a peaceful and focused pilgrimage."
   },
   {
-    question: "How do I book a Special Darshan?",
+    question: "How do I book a Sugam Darshan?",
     answer: "You can book through our website form, WhatsApp, or by calling our team. We handle all the coordination with temple authorities to ensure priority access."
   },
   {

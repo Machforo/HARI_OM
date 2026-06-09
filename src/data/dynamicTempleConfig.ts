@@ -1,4 +1,4 @@
-import { getShlokaAndTranslation } from "../pages/TempleDetail";
+﻿import { getShlokaAndTranslation } from "../pages/TempleDetail";
 
 export interface TempleConfig {
   subtitle: string;
@@ -67,7 +67,7 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
       rushDays: "Festivals, Weekends & Auspicious Days"
     },
     vipReality: {
-      title: `Is VIP Darshan Available at ${templeData?.name || "this Temple"}?`,
+      title: `Is Sugam Darshan Available at ${templeData?.name || "this Temple"}?`,
       description: isTrekking
         ? "Due to the rugged forest location, there are no official paid VIP cards. Spiritual devotion and local guide coordination are the only ways to navigate upper and lower cave shrines safely."
         : "While official paid channels exist, tickets are highly limited and sell out weeks in advance. Devotees face long waiting under the sun even with VIP tickets. Our priority assistance ensures smooth gate coordination and dedicated devotee support."
@@ -113,7 +113,7 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
     config.quickFacts.durationText = "1 to 2 Full Days for complete circuit";
     config.quickFacts.terrainText = "Mix of motorable trails & steep forest walks";
     config.quickFacts.rushDays = "Narasimha Jayanthi, Swati Nakshatram, Weekends";
-    config.vipReality.title = "Is VIP Darshan Available at Ahobilam Temple?";
+    config.vipReality.title = "Is Sugam Darshan Available at Ahobilam Temple?";
     config.vipReality.description = "Due to the rugged forest locations of the nine Nava Narasimha temples, there are no official paid VIP passes. Devotional willpower, proper trail safety, and expert local guide assistance are required to reach the shrines.";
     config.poojas = [
       { name: "Nava Narasimha Shanti Homam", desc: "A powerful fire ritual conducted at the base temple to remove negative planetary blocks." },
@@ -137,8 +137,8 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
     config.quickFacts.durationText = "2 to 3 Hours (up to 5 during peak aarti)";
     config.quickFacts.terrainText = "Large stone steps, tight queue grids & crowding";
     config.quickFacts.rushDays = "Janmashtami, Holi, Rukmini Vivah, Weekends";
-    config.vipReality.title = "Is VIP Darshan Available at Dwarkadhish Temple?";
-    config.vipReality.description = "There is no official paid VIP Darshan online ticket sold by the Dwarkadhish Devasthan Trust. Rushes are massive during Mangla and Shringar Aartis. Our local coordinators assist you in navigating the massive devotee queues and securing a comfortable, close-up view without the stress.";
+    config.vipReality.title = "Is Sugam Darshan Available at Dwarkadhish Temple?";
+    config.vipReality.description = "There is no official paid Sugam Darshan online ticket sold by the Dwarkadhish Devasthan Trust. Rushes are massive during Mangla and Shringar Aartis. Our local coordinators assist you in navigating the massive devotee queues and securing a comfortable, close-up view without the stress.";
     config.poojas = [
       { name: "Chappan Bhog Utsav", desc: "A premium ritual offering 56 sacred traditional sweets and delicacies to Lord Dwarkadhish in your name." },
       { name: "Rukmini Devi Shringar Puja", desc: "Dedicated worship offering pure silk garments and gold-plated shringar to Rukmini Devi." },
@@ -161,7 +161,7 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
     config.quickFacts.durationText = "1 to 2 Days (requires overnight stay)";
     config.quickFacts.terrainText = "Steep 16 km mountain trek & cold weather";
     config.quickFacts.rushDays = "May to June, September to October, Mahashivratri";
-    config.vipReality.title = "Is VIP Darshan Available at Kedarnath?";
+    config.vipReality.title = "Is Sugam Darshan Available at Kedarnath?";
     config.vipReality.description = "Official VIP slots are strictly managed and highly unpredictable due to climate conditions and government clearances. Devotees face freezing temperatures in line. Our support coordinates comfortable queue spots, hot meals, and immediate guide support.";
     config.poojas = [
       { name: "Rudra Abhishek Puja", desc: "A highly sacred water and milk bath ritual offered to the self-manifested Shiva Jyotirlinga." },
@@ -179,7 +179,7 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
     config.quickFacts.durationText = "1 to 2 Hours (up to 4 during peak days)";
     config.quickFacts.terrainText = "Crowded corridors, marble steps & tight security";
     config.quickFacts.rushDays = "Mondays, Mahashivratri, Sawan Month, Dev Deepawali";
-    config.vipReality.title = "Is VIP Darshan Available at Kashi Vishwanath?";
+    config.vipReality.title = "Is Sugam Darshan Available at Kashi Vishwanath?";
     config.vipReality.description = "The temple board offers Sugam Darshan (assisted entry) tickets. However, corridor queue lines can still get extremely heavy on Mondays. Our local guides coordinate your exact Sugam entry gate, handle locker deposits for mobile phones, and ensure a smooth touch-the-deity (Sparsh) experience.";
     config.poojas = [
       { name: "Sugam Sparsh Darshan", desc: "Assisted priority entry allowing you to touch the holy Jyotirlinga and perform direct water offering." },
@@ -197,8 +197,8 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
     config.quickFacts.durationText = "1.5 to 2.5 Hours";
     config.quickFacts.terrainText = "Open marble hallways & heavy beach breezes";
     config.quickFacts.rushDays = "Maha Shivratri, Kartik Purnima, Shravan Month";
-    config.vipReality.title = "Is VIP Darshan Available at Somnath Temple?";
-    config.vipReality.description = "The Somnath Trust offers priority darshan tickets. However, queues during evening Aarti are extremely long. Our team handles entry gate alignment, coordinates immediate cloakroom service, and arranges seating spots for the stunning Light & Sound Show.";
+    config.vipReality.title = "Is Sugam Darshan Available at Somnath Temple?";
+    config.vipReality.description = "The Somnath Trust offers sugam darshan tickets. However, queues during evening Aarti are extremely long. Our team handles entry gate alignment, coordinates immediate cloakroom service, and arranges seating spots for the stunning Light & Sound Show.";
     config.poojas = [
       { name: "Someshwar Maha Abhishek", desc: "High-grade liquid bath ritual with Vedic hymns chanting for ultimate spiritual peace." },
       { name: "Dhwajarochan Ceremony", desc: "Highly auspicious flag hoisting ceremony on the golden temple spire in your name." },
@@ -215,7 +215,7 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
     config.quickFacts.durationText = "1 to 2 Days (requires 13 km trek/helicopter)";
     config.quickFacts.terrainText = "Paved mountain trails, stairs & queue bays";
     config.quickFacts.rushDays = "Navratri, New Year, Summer Vacations, Weekends";
-    config.vipReality.title = "Is VIP Darshan Available at Vaishno Devi?";
+    config.vipReality.title = "Is Sugam Darshan Available at Vaishno Devi?";
     config.vipReality.description = "Official VIP entries are restricted to national dignitaries. Helicopter booking represents the only priority route, which is extremely difficult to book online. Our on-ground coordinators arrange priority queue slots, coordinate clean stays at Katra/Ardhkuwari, and organize horse/battery car bookings.";
     config.poojas = [
       { name: "Atka Aarti Facilitation", desc: "A highly prestigious slot to sit directly in front of the holy cave during direct morning/evening aarti." },
@@ -234,7 +234,7 @@ export const getTempleSpecificConfig = (baseSlug: string, templeData: any): Temp
     config.quickFacts.durationText = "2 to 3 Hours (requires walking grand entry)";
     config.quickFacts.terrainText = "Beautiful sandstone corridors & long secure walks";
     config.quickFacts.rushDays = "Ram Navami, Diwali, Weekends & Auspicious Days";
-    config.vipReality.title = "Is VIP Darshan Available at Ayodhya Ram Mandir?";
+    config.vipReality.title = "Is Sugam Darshan Available at Ayodhya Ram Mandir?";
     config.vipReality.description = "The Trust offers free passes for Aarti online, but slots sell out instantly. Queue lengths are huge. Our ground team ensures swift navigation from the security gates, handles footwear management, and positions your family for a comfortable, uninterrupted view of the beautiful Ram Lalla idol.";
     config.poojas = [
       { name: "Ram Lalla Mangala Aarti", desc: "Sacred early morning prayer service offered directly to the beautiful child form of Lord Rama." },

@@ -1,4 +1,4 @@
-import { useSearchParams, Link } from "react-router-dom";
+﻿import { useSearchParams, Link } from "react-router-dom";
 import { Eye, Flame, Gift, HandHeart, Check, Clock, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BookingForm } from "@/components/BookingForm";
@@ -175,7 +175,7 @@ const DarshanPanel = ({ temple }: { temple: Temple }) => (
         features={["Queue guidance", "Slot booking", "Local support"]}
       />
       <PriceCard
-        title="Special Darshan"
+        title="Sugam Darshan"
         price="₹1,851"
         features={["Fast-track entry", "Dedicated assistant", "Aarti pass coordination", "Family-friendly"]}
         highlighted
@@ -188,7 +188,7 @@ const DarshanPanel = ({ temple }: { temple: Temple }) => (
       />
     </div>
 
-    <InlineCTA temple={temple} service="vip-darshan" label="Darshan" />
+    <InlineCTA temple={temple} service="sugam-darshan" label="Darshan" />
   </div>
 );
 

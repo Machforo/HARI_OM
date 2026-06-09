@@ -18,8 +18,37 @@ const Index = () => {
   return (
     <div className="scroll-smooth">
       <SEO
-        title="Vandan Darshan | Your Gateway to Divine Grace & Sacred Experiences"
-        description="Experience a seamless spiritual journey with Vandan Darshan. Specialized assistance for Special Darshan, Puja, and Prasad at India's holiest temples."
+        title="Vandan Darshan | Sugam Darshan, Puja & Prasad at India's Holiest Temples"
+        description="A knowledgeable Pandit Ji will accompany you through the temple, guide you through every ritual with proper Vedic traditions, and share deep insights about the temple's history, significance, and spiritual meaning — ensuring your Darshan is complete, authentic, and truly blessed."
+        canonical="https://vandandarshan.com/"
+        keywords="Sugam Darshan, Vandan Darshan, temple darshan booking India, pandit ji guided darshan, puja booking online, prasad delivery, temple chadhava, pilgrimage assistance India"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ReligiousOrganization",
+            "name": "Vandan Darshan",
+            "url": "https://vandandarshan.com",
+            "logo": "https://vandandarshan.com/assets/images/logo.png",
+            "description": "Vandan Darshan is India's trusted spiritual concierge — providing Sugam Darshan, Puja, Prasad, and Chadhava services at 100+ sacred temples across India. A knowledgeable Pandit Ji accompanies devotees through every ritual with proper Vedic traditions.",
+            "telephone": "+91-8960965151",
+            "areaServed": "IN",
+            "sameAs": [
+              "https://www.instagram.com/vandandarshan",
+              "https://www.facebook.com/vandandarshan"
+            ]
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Vandan Darshan",
+            "url": "https://vandandarshan.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://vandandarshan.com/temples?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]}
       />
 
       {/* HERO SECTION */}

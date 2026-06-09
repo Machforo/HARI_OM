@@ -1,4 +1,4 @@
-import { SEO } from "@/components/SEO";
+﻿import { SEO } from "@/components/SEO";
 import { useParams, useNavigate } from "react-router-dom";
 import { templeList } from "@/data/temples";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils";
 
 const serviceConfig = {
   darshan: {
-    title: "Select Temples for Special Darshan",
-    subtitle: "Choose multiple temples where you'd like priority darshan assistance",
+    title: "Select Temples for Sugam Darshan",
+    subtitle: "Choose multiple temples where you'd like sugam darshan assistance",
     desc: "Skip queues and enjoy seamless darshan experiences across your preferred sacred shrines",
     icon: "🛕",
     color: "text-orange-600"

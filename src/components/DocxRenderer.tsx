@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import mammoth from "mammoth";
 import { ArrowRight, Sparkles, Flame, Gift, MapPin, Check, Flower, Clock, Info, Compass, Train, Plane, Bus, Hotel, HelpCircle, ChevronDown, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -99,8 +99,8 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ filePath, className,
 
         // Programmatic Terminology Replace
         html = html
-          .replace(/VIP Darshan/g, "Special Darshan")
-          .replace(/VIP darshan/g, "special darshan")
+          .replace(/Sugam Darshan/g, "Sugam Darshan")
+          .replace(/Sugam Darshan/g, "sugam darshan")
           .replace(/VIP/g, "Special");
 
         // 1. Completely strip broken images from docx
@@ -166,7 +166,7 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ filePath, className,
                   ${cards}
                 </div>
                 <div class="mt-8 pt-6 border-t border-border/40 flex justify-center">
-                  <button onclick="window.triggerDivineBooking?.('special-darshan')" class="px-8 h-12 bg-primary hover:bg-primary/95 text-white font-black rounded-full uppercase tracking-widest shadow-gold cursor-pointer transition-all" style="font-size: 10px;">Start your divine journey</button>
+                  <button onclick="window.triggerDivineBooking?.('sugam-darshan')" class="px-8 h-12 bg-primary hover:bg-primary/95 text-white font-black rounded-full uppercase tracking-widest shadow-gold cursor-pointer transition-all" style="font-size: 10px;">Start your divine journey</button>
                 </div>
               </div>
             </div>
@@ -263,7 +263,7 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ filePath, className,
             let title = "Sacred Assistance";
             let desc = "Book comprehensive assisted packages for details.";
             let icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
-            let serviceType = "special-darshan";
+            let serviceType = "sugam-darshan";
 
             if (text.toLowerCase().includes("guide") || text.toLowerCase().includes("trek")) {
               title = "Guide Services for Forest Treks";
@@ -500,7 +500,7 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ filePath, className,
               <h2 class="font-serif-display text-4xl md:text-6xl font-bold text-ivory mb-8 leading-tight">Begin Your Sacred Journey Today</h2>
               <p class="text-ivory/70 text-xl md:text-2xl max-w-3xl mx-auto mb-12 italic font-serif">"Let your soul find the peace it seeks in the presence of the divine."</p>
               <div class="flex flex-wrap justify-center gap-6">
-                <button onclick="window.triggerDivineBooking?.('special-darshan')" class="px-12 h-16 bg-gold hover:bg-gold/90 text-white font-black rounded-full uppercase tracking-[0.25em] text-xs shadow-2xl shadow-gold/20 transition-all">Book Guided Darshan</button>
+                <button onclick="window.triggerDivineBooking?.('sugam-darshan')" class="px-12 h-16 bg-gold hover:bg-gold/90 text-white font-black rounded-full uppercase tracking-[0.25em] text-xs shadow-2xl shadow-gold/20 transition-all">Book Guided Darshan</button>
                 <button onclick="window.triggerDivineBooking?.('yatra')" class="px-12 h-16 border-2 border-ivory/30 hover:border-gold hover:text-gold text-ivory font-black rounded-full uppercase tracking-[0.25em] text-xs transition-all">Plan Full Yatra</button>
               </div>
             </div>
@@ -1053,7 +1053,7 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ filePath, className,
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-8">
               {[
-                { label: "Book Darshan", type: "special-darshan", icon: Sparkles },
+                { label: "Get Sugam Darshan", type: "sugam-darshan", icon: Sparkles },
                 { label: "Plan Yatra", type: "yatra", icon: Compass },
                 { label: "Perform Puja", type: "puja", icon: Flame },
                 { label: "Order Prasad", type: "prasad", icon: Gift }

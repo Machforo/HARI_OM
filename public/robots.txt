@@ -1,3 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /crm
+Disallow: /admin
+Disallow: /ops
+Disallow: /pandit-portal
+
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +17,4 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+Sitemap: https://vandandarshan.com/sitemap.xml

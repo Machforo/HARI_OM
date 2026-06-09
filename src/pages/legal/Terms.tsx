@@ -1,11 +1,11 @@
-import { LegalLayout } from "./LegalLayout";
+﻿import { LegalLayout } from "./LegalLayout";
 
 const Terms = () => (
   <LegalLayout title="Terms & Conditions" description="Vandan Darshan Terms and Conditions governing the use of our spiritual concierge services across India.">
     <p>Welcome to Vandan Darshan ("we", "us", "our"). By accessing or using our website and services, you ("user", "devotee") agree to these Terms & Conditions. Please read them carefully.</p>
 
     <h2>1. Nature of services</h2>
-    <p>Vandan Darshan is a spiritual concierge that assists devotees with Special Darshan coordination, puja booking, prasad delivery, chadhava and yatra arrangements at various temples in India and abroad. We act as a facilitator and are not affiliated with any temple trust unless expressly stated.</p>
+    <p>Vandan Darshan is a spiritual concierge that assists devotees with Sugam Darshan coordination, puja booking, prasad delivery, chadhava and yatra arrangements at various temples in India and abroad. We act as a facilitator and are not affiliated with any temple trust unless expressly stated.</p>
 
     <h2>2. Bookings</h2>
     <ul>

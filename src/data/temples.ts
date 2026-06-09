@@ -1,4 +1,4 @@
-import { templeMetadata } from "./templeMetadata";
+﻿import { templeMetadata } from "./templeMetadata";
 
 export type Temple = {
   slug: string;
@@ -36,7 +36,7 @@ export const templeList: Temple[] = [
     image: "https://hblimg.mmtcdn.com/content/hubble/img/dwarka/mmt/activities/m_Dwarkadhish%20Temple-1_l_498_640.jpg",
     tagline: "Jagat Mandir — kingdom of Lord Krishna, one of the sacred Char Dham.",
     bestTime: "Oct – Mar",
-    highlights: ["Char Dham", "Special Darshan", "Janmashtami special"],
+    highlights: ["Char Dham", "Sugam Darshan", "Janmashtami special"],
     category: "Char Dham"
   },
   {
@@ -84,7 +84,7 @@ export const templeList: Temple[] = [
     image: "https://substackcdn.com/image/fetch/$s_!nMlI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b7931c1-b550-44b2-935e-80be13f08f29_826x508.jpeg",
     tagline: "Sacred cave shrine in the Trikuta hills, calling every devotee.",
     bestTime: "Mar – Oct",
-    highlights: ["Helicopter Yatra", "Special Darshan", "Navratri"],
+    highlights: ["Helicopter Yatra", "Sugam Darshan", "Navratri"],
     category: "North India"
   },
 ];
@@ -148,7 +148,7 @@ export const getTemple = (slug: string) => {
     category: metadata.category,
     tagline: `Experience the divine presence at ${name} Temple.`,
     bestTime: "Year-round",
-    highlights: ["Special Darshan", "Puja Booking", "Prasad Delivery"],
+    highlights: ["Sugam Darshan", "Puja Booking", "Prasad Delivery"],
   } as Temple;
 };
 

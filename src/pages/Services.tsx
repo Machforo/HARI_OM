@@ -1,4 +1,4 @@
-import { SEO } from "@/components/SEO";
+﻿import { SEO } from "@/components/SEO";
 import { Sparkles, Flame, Gift, Heart, ArrowRight, MapPin, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const services = [
   {
-    title: "Special Darshan",
+    title: "Sugam Darshan",
     slug: "darshan",
     icon: Sparkles,
     desc: "Skip the long queues and focus on your prayer. Our on-ground team ensures a seamless, divine experience at India's holiest shrines.",
@@ -57,7 +57,7 @@ const services = [
 
 // Service name mapping for display
 const serviceNames: Record<string, string> = {
-  darshan: "Special Darshan",
+  darshan: "Sugam Darshan",
   puja: "Pooja Services",
   prasad: "Prasad Delivery",
   chadhava: "Chadhava Offerings"
@@ -143,8 +143,8 @@ const ServicesContent = () => {
     return (
       <>
         <SEO 
-          title="Spiritual Services — Special Darshan, Puja & Prasad | Vandan Darshan" 
-          description="Comprehensive spiritual services including priority darshan assistance, authentic puja bookings, and global prasad delivery from India's sacred shrines. Book across 100+ sacred destinations."
+          title="Spiritual Services — Sugam Darshan, Puja & Prasad | Vandan Darshan" 
+          description="Comprehensive spiritual services including sugam darshan assistance, authentic puja bookings, and global prasad delivery from India's sacred shrines. Book across 100+ sacred destinations."
         />
 
         {/* BANNER HERO */}

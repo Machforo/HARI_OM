@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+﻿import { Link, useParams } from "react-router-dom";
 import { ArrowRight, Check, MapPin, Star, Sparkles, Flame, Gift, Compass, Heart, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { BookingModal } from "@/components/BookingModal";
@@ -329,7 +329,7 @@ const TempleServiceDetail = ({ type: propType }: { type?: keyof typeof serviceTy
                 </div>
                 <div>
                   <span className="block text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Priority</span>
-                  <span className="font-bold text-sm md:text-base">Special Darshan</span>
+                  <span className="font-bold text-sm md:text-base">Sugam Darshan</span>
                 </div>
               </Link>
 

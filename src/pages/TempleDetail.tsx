@@ -103,7 +103,7 @@ const TempleDetail = () => {
   const [dynamicMeta, setDynamicMeta] = useState<{ title?: string; description?: string }>({});
   const [activeSection, setActiveSection] = useState("introduction");
   const [isBookingOpen, setIsBookingOpen] = useState(isDarshanPage);
-  const [bookingService, setBookingService] = useState<string | undefined>(isDarshanPage ? "Special Darshan" : undefined);
+  const [bookingService, setBookingService] = useState<string | undefined>(isDarshanPage ? "Sugam Darshan" : undefined);
   const [showSubheader, setShowSubheader] = useState(false);
 
   useEffect(() => {
@@ -295,7 +295,7 @@ const TempleDetail = () => {
   useEffect(() => {
     if (isDarshanPage) {
       setIsBookingOpen(true);
-      setBookingService("Special Darshan");
+      setBookingService("Sugam Darshan");
     }
   }, [isDarshanPage]);
 
@@ -381,7 +381,7 @@ const TempleDetail = () => {
 
   useEffect(() => {
     (window as any).triggerDivineBooking = (service?: string) => {
-      setBookingService(service || "special-darshan");
+      setBookingService(service || "sugam-darshan");
       setIsBookingOpen(true);
     };
     return () => {
@@ -401,7 +401,7 @@ const TempleDetail = () => {
   // Sticky subheader links
   const sublinks = [
     { id: "overview", label: "Temple Info", path: `/${baseSlug}-temple` },
-    { id: "darshan", label: "Special Darshan", path: `/${baseSlug}-temple/darshan` },
+    { id: "darshan", label: "Sugam Darshan", path: `/${baseSlug}-temple/darshan` },
     { id: "puja", label: "Pooja Sewa", path: `/${baseSlug}-temple/puja` },
     { id: "prasad", label: "Prasad Delivery", path: `/${baseSlug}-temple/prasad` },
     { id: "chadhava", label: "Chadhava", path: `/${baseSlug}-temple/chadhava` }
@@ -422,21 +422,55 @@ const TempleDetail = () => {
     );
   }
 
-  const seoTitle = dynamicMeta.title || `${displayTitle} ${isDarshanPage ? "Special Darshan Booking" : "Temple Info"} | Vandan Darshan`;
-  const seoDesc = dynamicMeta.description || `Explore ${displayTitle} ${isDarshanPage ? "Special Darshan assistance, timings, and hassle-free booking" : "timings, history, and sacred information"}. Plan your spiritual journey today.`;
+  const state = templeData?.state || "India";
+  const deity = templeData?.deity || "the deity";
+
+  const seoTitle = dynamicMeta.title || `${displayTitle} ${isDarshanPage ? "Sugam Darshan Booking" : "Temple — Darshan Timings, History & Information"} | Vandan Darshan`;
+  const seoDesc = dynamicMeta.description || `Explore ${displayTitle} ${isDarshanPage ? "Sugam Darshan with Pandit Ji guidance — timings, rituals & hassle-free booking" : "darshan timings, history, significance, and sacred information"}. Plan your spiritual journey with Vandan Darshan.`;
 
   const finalTitle = isDarshanPage
-    ? `${displayTitle} Temple Darshan Booking | VIP Assistance & Guided Tour`
+    ? `${displayTitle} Sugam Darshan Booking | Pandit Ji Guided Darshan — Vandan Darshan`
     : seoTitle;
   const finalDesc = isDarshanPage
-    ? `Plan your ${displayTitle} Temple darshan with expert guidance. Explore timings, history, and queue management info. Book hassle-free VIP darshan and poojas today.`
+    ? `A knowledgeable Pandit Ji will accompany you through ${displayTitle} in ${state}, guide you through every ritual with proper Vedic traditions, and share deep insights about the temple's history and significance. Book your Sugam Darshan today with Vandan Darshan.`
     : seoDesc;
+
+  const canonicalBase = "https://vandandarshan.com";
+  const canonicalUrl = isDarshanPage
+    ? `${canonicalBase}/${baseSlug}-temple/darshan`
+    : `${canonicalBase}/${baseSlug}-temple`;
+
+  const jsonLdSchema = isDarshanPage ? {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": `${displayTitle} Sugam Darshan`,
+    "description": `Guided Darshan at ${displayTitle} in ${state} with an expert Pandit Ji who accompanies you through every ritual with proper Vedic traditions.`,
+    "provider": {
+      "@type": "Organization",
+      "name": "Vandan Darshan",
+      "url": "https://vandandarshan.com"
+    },
+    "areaServed": state,
+    "serviceType": "Sugam Darshan — Guided Temple Visit"
+  } : {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    "name": `${displayTitle} Temple`,
+    "description": `${displayTitle} is a sacred Hindu temple in ${state}, dedicated to ${deity}. Explore darshan timings, history, and plan your pilgrimage with Vandan Darshan's Sugam Darshan service.`,
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": state,
+      "addressCountry": "IN"
+    },
+    "touristType": "Pilgrim",
+    "isAccessibleForFree": true
+  };
 
   const h1Override = rawSlug.replace(/-vipdarsh$/, "");
 
   return (
     <>
-      <SEO title={finalTitle} description={finalDesc} />
+      <SEO title={finalTitle} description={finalDesc} canonical={canonicalUrl} jsonLd={jsonLdSchema} />
       {isDarshanPage ? (
         <AhobilamCustomDarshan
           templeSlug={baseSlug}

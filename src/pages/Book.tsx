@@ -1,11 +1,11 @@
-import { SEO } from "@/components/SEO";
+﻿import { SEO } from "@/components/SEO";
 import { BookingForm } from "@/components/BookingForm";
 
 const Book = () => (
   <>
     <SEO
-      title="Book Darshan, Puja or Prasad — Vandan Darshan"
-      description="Book Special Darshan, puja, prasad delivery or chadhava across India. Share your details — Vandan Darshan team responds within 30 minutes."
+      title="Get Sugam Darshan, Puja or Prasad — Vandan Darshan"
+      description="Book Sugam Darshan, puja, prasad delivery or chadhava across India. Share your details — Vandan Darshan team responds within 30 minutes."
     />
     <section className="container-prose py-16 text-center">
       <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Begin your journey</p>

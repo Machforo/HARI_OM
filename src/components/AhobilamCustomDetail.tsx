@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -398,7 +398,7 @@ export const AhobilamCustomDetail = ({ onOpenBooking, templeSlug = "ahobilam", d
             })}
           </div>
           <button
-            onClick={() => onOpenBooking("Special Darshan Support")}
+            onClick={() => onOpenBooking("Sugam Darshan Support")}
             className="h-10 rounded-full px-6 bg-[#D85A30] hover:bg-[#B04320] text-white text-[10px] font-black uppercase tracking-widest border-none cursor-pointer shadow-md transition-all flex items-center justify-center font-bold"
           >
             Start your divine journey
@@ -1201,7 +1201,7 @@ export const AhobilamCustomDetail = ({ onOpenBooking, templeSlug = "ahobilam", d
                 <div className="h-12 w-12 rounded-2xl bg-[#D85A30] flex items-center justify-center text-white mb-6 group-hover:rotate-12 transition-transform shadow-md">
                   <Sparkles className="h-5 w-5" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-[#1A1240] mb-3">Special Darshan</h3>
+                <h3 className="font-serif text-2xl font-bold text-[#1A1240] mb-3">Sugam Darshan</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed font-semibold">Priority queue access and local devotee coordination support to skip long temple queues.</p>
               </div>
               <Link to={`/${baseSlug}-temple/darshan`} className="w-full mt-6 h-11 bg-[#FFF8F0] hover:bg-[#D85A30] hover:text-white text-[#D85A30] border border-[#D85A30]/10 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all cursor-pointer flex items-center justify-center font-bold">Start your divine journey</Link>

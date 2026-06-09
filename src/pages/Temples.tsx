@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+﻿import { useMemo, useState, useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import { TempleCard } from "@/components/TempleCard";
 import { Input } from "@/components/ui/input";
@@ -36,7 +36,7 @@ const Temples = () => {
           category: metadata.category,
           tagline: `Experience the divine presence at ${name} Temple.`,
           bestTime: "Year-round",
-          highlights: ["Special Darshan", "Puja Booking", "Prasad Delivery"],
+          highlights: ["Sugam Darshan", "Puja Booking", "Prasad Delivery"],
         } as Temple;
       })
       .filter(Boolean) as Temple[];
@@ -67,8 +67,8 @@ const Temples = () => {
   return (
     <>
       <SEO
-        title="Explore All Sacred Shrines — Book Darshan, Puja & Prasad | Vandan Darshan"
-        description="Search through 100+ sacred Indian temples. Specialized assistance for Special Darshan, Puja, and Prasad delivery at every shrine."
+        title="Explore All Sacred Shrines — Get Sugam Darshan, Puja & Prasad | Vandan Darshan"
+        description="Search through 100+ sacred Indian temples. Specialized assistance for Sugam Darshan, Puja, and Prasad delivery at every shrine."
       />
 
       <section className="relative pt-12 pb-20 overflow-hidden bg-gradient-cream">

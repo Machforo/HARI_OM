@@ -1,8 +1,8 @@
-import mammoth from "mammoth";
+﻿import mammoth from "mammoth";
 import path from "path";
 import fs from "fs";
 
-const docxPath = "public/assets/content/darshan/Dwarkadhish Temple Special Darshan Booking _ Hassle-Free Darshan.docx";
+const docxPath = "public/assets/content/darshan/Dwarkadhish Temple Sugam Darshan Booking _ Hassle-Free Darshan.docx";
 
 mammoth.extractRawText({ path: docxPath })
   .then(result => {

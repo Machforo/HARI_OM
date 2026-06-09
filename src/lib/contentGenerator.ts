@@ -1,4 +1,4 @@
-export interface TempleData {
+﻿export interface TempleData {
   name?: string;
   deity?: string;
   location?: string;
@@ -148,14 +148,14 @@ export const generateServiceContent = (type: string, templeName: string, templeD
 
   // Default Darshan or fallback
   return {
-    mainDescription: `Experience the divine presence of ${deity} at ${templeName}. Situated in ${location}, this ${category} offers a profound spiritual experience. Let our team assist you in a smooth, priority darshan, avoiding long queues and ensuring your focus remains solely on devotion.`,
+    mainDescription: `Experience the divine presence of ${deity} at ${templeName}. Situated in ${location}, this ${category} offers a profound spiritual experience. Let our team assist you in a smooth, sugam darshan, avoiding long queues and ensuring your focus remains solely on devotion.`,
     benefits: [
       { title: "Priority Access", desc: "Skip the long, exhausting queues and get direct, peaceful access to the sanctum sanctorum." },
       { title: "Guided Assistance", desc: "Local spiritual guides will assist you with the temple protocols, timings, and local legends." },
       { title: "Peace of Mind", desc: "Focus entirely on your prayers and connection with the divine while we handle the logistics." }
     ],
     process: [
-      { step: "Booking Confirmation", desc: "Select your preferred date and time for the VIP Darshan experience." },
+      { step: "Booking Confirmation", desc: "Select your preferred date and time for the Sugam Darshan experience." },
       { step: "Local Coordination", desc: "Meet our local representative at the designated point near the temple premises." },
       { step: "Seamless Darshan", desc: "Enjoy a guided, hassle-free entry and a deeply fulfilling spiritual encounter." }
     ]

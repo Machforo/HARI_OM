@@ -151,6 +151,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const updated = [newLead, ...leads];
     setLeads(updated);
     localStorage.setItem("vd_leads", JSON.stringify(updated));
+
+    // Send email notification via CRM API
+    const API_BASE = import.meta.env.DEV ? "http://localhost:5001" : "https://api.vandandarshan.com";
+    fetch(`${API_BASE}/api/notifications/lead`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: lead.name,
+        phone: lead.phone,
+        email: lead.email,
+        service: lead.service,
+        temple: lead.temple,
+        date: lead.date,
+        devotees: lead.devotees?.toString() || "1",
+        notes: lead.notes
+      })
+    }).catch(err => console.error("Notification email error:", err));
+
     return newLead;
   };
 

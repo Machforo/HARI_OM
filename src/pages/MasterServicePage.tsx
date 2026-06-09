@@ -1,4 +1,4 @@
-import { SEO } from "@/components/SEO";
+﻿import { SEO } from "@/components/SEO";
 import { allTemplesFullList } from "@/data/temples";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,8 +12,8 @@ interface Props {
 
 const serviceConfig = {
   darshan: {
-    title: "Special Darshan Assistance",
-    desc: "Skip the queues and experience the divine presence with our priority darshan assistance across India's sacred shrines.",
+    title: "Sugam Darshan Assistance",
+    desc: "Skip the queues and experience the divine presence with our sugam darshan assistance across India's sacred shrines.",
     icon: Sparkles,
     color: "text-primary",
     bgColor: "bg-primary/10",

@@ -1,4 +1,4 @@
-import { SEO } from "@/components/SEO";
+﻿import { SEO } from "@/components/SEO";
 import { blogs } from "@/data/blogs";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -269,7 +269,7 @@ const BlogPost = () => {
                 <h3 className="font-serif-display text-2xl font-bold text-secondary mb-8 relative z-10">Experience These Services</h3>
                 <div className="space-y-3 relative z-10">
                   {[
-                    { label: "Special Darshan", path: "/services", icon: Sparkles },
+                    { label: "Sugam Darshan", path: "/services", icon: Sparkles },
                     { label: "Pooja Services", path: "/services", icon: Heart },
                     { label: "Chadhava Offerings", path: "/services", icon: MapPin },
                     { label: "Prasad Delivery", path: "/services", icon: Gift }

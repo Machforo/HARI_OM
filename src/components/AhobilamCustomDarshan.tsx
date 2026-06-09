@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -229,7 +229,7 @@ export const AhobilamCustomDarshan = ({ onOpenBooking, templeSlug = "ahobilam", 
                   className="relative overflow-hidden flex items-center justify-center bg-[#D85A30] hover:bg-[#B04320] text-white rounded-2xl h-16 text-xs font-black uppercase tracking-widest shadow-gold border-none cursor-pointer w-full group font-bold"
                 >
                   <Sparkles className="mr-3 h-5 w-5 text-[#E6A817] group-hover:scale-125 transition-transform shrink-0" />
-                  Book Darshan
+                  Get Sugam Darshan
                 </Button>
                 <Link
                   to={`/${baseSlug}-temple/puja`}
@@ -344,7 +344,7 @@ export const AhobilamCustomDarshan = ({ onOpenBooking, templeSlug = "ahobilam", 
             onClick={() => onOpenBooking(`${displayTitle} Assisted Darshan`)}
             className="h-10 rounded-full px-6 bg-[#D85A30] hover:bg-[#B04320] text-white text-[10px] font-black uppercase tracking-widest border-none cursor-pointer shadow-md transition-all flex items-center justify-center font-bold"
           >
-            Book Darshan Now
+            Get Sugam Darshan
           </button>
         </div>
       </div>
@@ -710,7 +710,7 @@ export const AhobilamCustomDarshan = ({ onOpenBooking, templeSlug = "ahobilam", 
 
           <div className="grid md:grid-cols-5 gap-8">
             {[
-              { num: "1", title: "Select Service", desc: "Pick dynamic priority darshan, pooja, prasad, or full transport support." },
+              { num: "1", title: "Select Service", desc: "Pick dynamic sugam darshan, pooja, prasad, or full transport support." },
               { num: "2", title: "Specify Dates", desc: "Select your desired pilgrimage dates and timeframes." },
               { num: "3", title: "Add Group Details", desc: "List number of pilgrims and specify special senior needs." },
               { num: "4", title: "Coordinate logistics", desc: "Verify pickups, shoe/bag custodians, and custom guides." },

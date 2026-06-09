@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -8,7 +8,7 @@ const testimonials = [
     id: 1,
     name: "Vikram Malhotra",
     location: "Bangalore",
-    text: "The Special Darshan at Tirupati was handled with such precision. My parents could pray peacefully without the stress of the crowds. Truly a blessing.",
+    text: "The Sugam Darshan at Tirupati was handled with such precision. My parents could pray peacefully without the stress of the crowds. Truly a blessing.",
     rating: 5,
     avatar: "https://static.vecteezy.com/system/resources/thumbnails/049/329/467/small/attractive-happy-north-indian-young-man-in-traditional-dress-with-isolated-on-transparent-background-cut-out-free-png.png"
   },
@@ -64,7 +64,7 @@ const testimonials = [
     id: 8,
     name: "Anand Joshi",
     location: "Mumbai",
-    text: "The Kedarnath Yatra package was outstanding. Helicopter tickets were secured and the VIP Darshan was absolutely seamless. God bless the team.",
+    text: "The Kedarnath Yatra package was outstanding. Helicopter tickets were secured and the Sugam Darshan was absolutely seamless. God bless the team.",
     rating: 5,
     avatar: "https://t4.ftcdn.net/jpg/00/33/37/83/360_F_33378356_gbnqycEE7TWnxa8Og49mkTn6ISTjxjVT.jpg"
   },

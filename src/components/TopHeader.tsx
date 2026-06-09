@@ -1,4 +1,4 @@
-import { Mail, Phone, Instagram, Facebook, Youtube, MapPin, Globe } from "lucide-react";
+﻿import { Mail, Phone, Instagram, Facebook, Youtube, MapPin, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -39,7 +39,7 @@ export const TopHeader = ({ transparent }: { transparent?: boolean }) => {
               <Facebook className="h-4 w-4" />
             </a>
             <Button asChild className="h-10 px-8 text-[11px] font-black uppercase tracking-[0.25em] bg-primary hover:bg-white hover:text-primary transition-all shadow-gold border-none rounded-full ml-4">
-              <Link to="/book">Book Darshan</Link>
+              <Link to="/book">Get Sugam Darshan</Link>
             </Button>
           </div>
         </div>

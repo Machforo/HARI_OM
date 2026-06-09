@@ -1,4 +1,4 @@
-import { SEO } from "@/components/SEO";
+﻿import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-final.png";
@@ -9,7 +9,7 @@ const About = () => (
   <>
     <SEO
       title="About Vandan Darshan — Devotees serving devotees"
-      description="Vandan Darshan is a trusted spiritual concierge spreading devotion through Special Darshan, puja, prasad and chadhava across India's most sacred temples."
+      description="Vandan Darshan is a trusted spiritual concierge spreading devotion through Sugam Darshan, puja, prasad and chadhava across India's most sacred temples."
     />
 
     <section className="container-prose py-20 grid lg:grid-cols-2 gap-12 items-center">
@@ -55,7 +55,7 @@ const About = () => (
       <p className="text-xs uppercase tracking-[0.3em] font-semibold text-gold">Our mission</p>
       <h2 className="font-serif-display text-4xl md:text-5xl font-semibold mt-3">Spreading spirituality, one devotee at a time.</h2>
       <p className="text-muted-foreground mt-6 leading-relaxed text-lg">
-        We aim to make spiritual experiences accessible, organised and meaningful — across India and the world. Whether it's a Special Darshan, a sacred puja in your name, or a packet of prasad arriving at your home, our promise is the same: care, authenticity and the warmth of devotion.
+        We aim to make spiritual experiences accessible, organised and meaningful — across India and the world. Whether it's a Sugam Darshan, a sacred puja in your name, or a packet of prasad arriving at your home, our promise is the same: care, authenticity and the warmth of devotion.
       </p>
     </section>
 
@@ -70,7 +70,7 @@ const About = () => (
             <Link to="/services">Explore Services <ArrowRight className="h-4 w-4" /></Link>
           </Button>
           <Button asChild variant="outline" size="xl">
-            <Link to="/book">Book Darshan Now</Link>
+            <Link to="/book">Get Sugam Darshan</Link>
           </Button>
         </div>
       </div>

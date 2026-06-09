@@ -94,6 +94,7 @@ export const Header = () => {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const { pathname } = useLocation();
   const isHomepage = pathname === "/";
   const shouldBeSolid = isScrolled || !isHomepage;
@@ -109,6 +110,7 @@ export const Header = () => {
 
   useEffect(() => {
     setOpen(false);
+    setActiveMenu(null);
   }, [pathname]);
 
   return (
@@ -131,7 +133,7 @@ export const Header = () => {
           shouldBeSolid ? "py-1" : "py-2 md:py-3"
         )}>
           <div className="container-prose flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-4 group shrink-0" onClick={() => setOpen(false)}>
+            <Link to="/" className="flex items-center gap-4 group shrink-0" onClick={() => { setOpen(false); setActiveMenu(null); }}>
               <div className="relative h-20 w-20 md:h-28 md:w-28 -my-2 md:-my-4 flex items-center justify-center z-10">
                 <img 
                   src={logo} 
@@ -165,10 +167,17 @@ export const Header = () => {
               {nav.map((n) => (
                 <div 
                   key={n.to} 
-                  className="relative group flex items-center"
+                  className="relative flex items-center"
+                  onMouseLeave={() => setActiveMenu(null)}
                 >
                   <Link
                     to={n.to}
+                    onMouseEnter={() => {
+                      if (n.isMegamenu) {
+                        setActiveMenu(n.to);
+                      }
+                    }}
+                    onClick={() => setActiveMenu(null)}
                     className={cn(
                       "text-[14px] font-bold transition-all hover:text-primary flex items-center gap-1 py-4",
                       pathname.startsWith(n.to) 
@@ -188,7 +197,10 @@ export const Header = () => {
 
                   {/* MEGAMENU: Full Width */}
                   {n.isMegamenu && (
-                    <div className="fixed top-[calc(100%+0px)] left-0 right-0 w-screen bg-white border-b border-border shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 translate-y-2 group-hover:translate-y-0 flex z-[1000] min-h-[400px]">
+                    <div className={cn(
+                      "fixed top-[calc(100%+0px)] left-0 right-0 w-screen bg-white border-b border-border shadow-2xl transition-all duration-500 flex z-[1000] min-h-[400px]",
+                      activeMenu === n.to ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-2"
+                    )}>
                       <div className="w-[30%] relative overflow-hidden group/img bg-secondary hidden lg:block">
                         <img src={n.image} className="h-full w-full object-cover transition-transform duration-1000 group-hover/img:scale-110 opacity-60" alt={n.label} />
                         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/20 to-transparent" />
@@ -196,12 +208,24 @@ export const Header = () => {
                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-4 block">{n.label}</span>
                            <h4 className="font-serif-display text-3xl font-bold text-white mb-4 leading-tight">{n.title}</h4>
                            <Button className="bg-primary hover:bg-white hover:text-secondary border-none text-white rounded-full px-8 h-12 font-black uppercase tracking-widest text-[10px]" asChild>
-                             <Link to={n.to}>View All <ArrowRight className="h-4 w-4 ml-2" /></Link>
+                             <Link to={n.to} onClick={() => setActiveMenu(null)}>View All <ArrowRight className="h-4 w-4 ml-2" /></Link>
                            </Button>
                         </div>
                       </div>
                       
-                      <div className="w-full lg:w-[70%] p-10 lg:p-16 bg-white">
+                      <div className="w-full lg:w-[70%] p-10 lg:p-16 bg-white relative">
+                        {/* Close/Cancel Button */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveMenu(null);
+                          }}
+                          className="absolute top-6 right-6 p-2 rounded-full text-muted-foreground hover:text-primary hover:bg-secondary/5 transition-colors z-[1001]"
+                          aria-label="Close menu"
+                        >
+                          <X className="h-5 w-5" />
+                        </button>
+
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
                           <div>
                             <div className="flex items-center gap-3 mb-8 border-b border-border/40 pb-4">
@@ -211,12 +235,24 @@ export const Header = () => {
                             <ul className="space-y-4">
                               {n.popTemples?.map(t => (
                                 <li key={t.slug}>
-                                  <Link to={getDynamicLink(n.type, t.slug)} className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">
+                                  <Link 
+                                    to={getDynamicLink(n.type, t.slug)} 
+                                    onClick={() => setActiveMenu(null)}
+                                    className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link"
+                                  >
                                     {t.name} <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
                                   </Link>
                                 </li>
                               ))}
-                              <li><Link to={n.to} className="text-sm font-bold text-primary hover:underline transition-all">View All 97+ Temples</Link></li>
+                              <li>
+                                <Link 
+                                  to={n.to} 
+                                  onClick={() => setActiveMenu(null)}
+                                  className="text-sm font-bold text-primary hover:underline transition-all"
+                                >
+                                  View All 97+ Temples
+                                </Link>
+                              </li>
                             </ul>
                           </div>
 
@@ -228,7 +264,11 @@ export const Header = () => {
                             <ul className="space-y-4">
                               {n.sacredTemples?.map(t => (
                                 <li key={t.slug}>
-                                  <Link to={getDynamicLink(n.type, t.slug)} className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">
+                                  <Link 
+                                    to={getDynamicLink(n.type, t.slug)} 
+                                    onClick={() => setActiveMenu(null)}
+                                    className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link"
+                                  >
                                     {t.name} <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
                                   </Link>
                                 </li>
@@ -242,10 +282,42 @@ export const Header = () => {
                               <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">Spiritual Resources</h4>
                             </div>
                             <ul className="space-y-4">
-                              <li><Link to="/media/blogs" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Spiritual Blogs <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/about" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Our Mission <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/contact" className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link">Contact Support <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" /></Link></li>
-                              <li><Link to="/book" className="text-sm font-black text-gold uppercase tracking-widest mt-4 block hover:underline transition-all">Book Your Yatra ॥</Link></li>
+                              <li>
+                                <Link 
+                                  to="/media/blogs" 
+                                  onClick={() => setActiveMenu(null)}
+                                  className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link"
+                                >
+                                  Spiritual Blogs <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
+                                </Link>
+                              </li>
+                              <li>
+                                <Link 
+                                  to="/about" 
+                                  onClick={() => setActiveMenu(null)}
+                                  className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link"
+                                >
+                                  Our Mission <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
+                                </Link>
+                              </li>
+                              <li>
+                                <Link 
+                                  to="/contact" 
+                                  onClick={() => setActiveMenu(null)}
+                                  className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-between group/link"
+                                >
+                                  Contact Support <ArrowRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
+                                </Link>
+                              </li>
+                              <li>
+                                <Link 
+                                  to="/book" 
+                                  onClick={() => setActiveMenu(null)}
+                                  className="text-sm font-black text-gold uppercase tracking-widest mt-4 block hover:underline transition-all"
+                                >
+                                  Book Your Yatra ॥
+                                </Link>
+                              </li>
                             </ul>
                           </div>
                         </div>

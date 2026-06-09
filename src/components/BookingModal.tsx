@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,7 @@ interface BookingModalProps {
 }
 
 const serviceTypes = {
-  "special-darshan": { title: "Special Darshan Assistance", icon: Sparkles },
+  "sugam-darshan": { title: "Sugam Darshan Assistance", icon: Sparkles },
   "puja": { title: "Pooja & Rituals", icon: Flame },
   "prasad": { title: "Prasad Delivery", icon: Gift },
   "chadhava": { title: "Chadhava & Offerings", icon: Heart },
@@ -321,7 +321,7 @@ export const BookingModal = ({ isOpen, onClose, defaultTemple, defaultService }:
                       <Select value={form.service} onValueChange={(v) => set("service", v)} required>
                         <SelectTrigger className="h-12 text-sm"><SelectValue placeholder="Choose service" /></SelectTrigger>
                         <SelectContent className="z-[1100]">
-                          <SelectItem value="special-darshan">Special Darshan Assistance</SelectItem>
+                          <SelectItem value="sugam-darshan">Sugam Darshan Assistance</SelectItem>
                           <SelectItem value="puja">Pooja & Rituals</SelectItem>
                           <SelectItem value="prasad">Prasad Delivery</SelectItem>
                           <SelectItem value="chadhava">Chadhava & Offerings</SelectItem>

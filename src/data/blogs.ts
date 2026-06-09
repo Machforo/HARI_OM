@@ -1,4 +1,4 @@
-export interface BlogPost {
+﻿export interface BlogPost {
   id: number;
   slug: string;
   title: string;
@@ -108,7 +108,7 @@ export const blogs: BlogPost[] = [
       </ul>
       <h2>Spiritual Significance and Transformation</h2>
       <p>The Char Dham Yatra is not merely a pilgrimage but a complete spiritual metamorphosis. The challenges of the journey—climbing mountains, facing natural elements—become metaphors for overcoming internal obstacles and limitations.</p>
-      <p>At Vandan Darshan, we ensure your journey is seamless and sacred by handling all logistics, from helicopter bookings to priority darshan assistance, authentic local guide services, and spiritual guidance from learned priests.</p>
+      <p>At Vandan Darshan, we ensure your journey is seamless and sacred by handling all logistics, from helicopter bookings to sugam darshan assistance, authentic local guide services, and spiritual guidance from learned priests.</p>
     `,
     image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&q=80",
     date: "April 28, 2024",
@@ -216,7 +216,7 @@ export const blogs: BlogPost[] = [
       <h2>Spiritual Significance</h2>
       <p>The consecration of Ram Mandir marks the fulfillment of an ancient prophecy and represents the triumph of dharma (righteousness) over adharma (chaos).</p>
       <h2>Plan Your Visit</h2>
-      <p>Vandan Darshan facilitates seamless pilgrimage experiences to Ram Mandir with priority darshan access, guided spiritual tours, and accommodation in sacred environments.</p>
+      <p>Vandan Darshan facilitates seamless pilgrimage experiences to Ram Mandir with sugam darshan access, guided spiritual tours, and accommodation in sacred environments.</p>
     `,
     image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&q=80",
     date: "Ongoing",

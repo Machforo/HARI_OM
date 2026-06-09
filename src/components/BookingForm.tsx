@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -142,7 +142,7 @@ export const BookingForm = ({ defaultTemple, defaultService, compact }: Props) =
         <Select value={form.service} onValueChange={(v) => set("service", v)} required>
           <SelectTrigger className={inputClasses}><SelectValue placeholder="Choose service" /></SelectTrigger>
           <SelectContent className="z-[1001]">
-            <SelectItem value="special-darshan">Special Darshan</SelectItem>
+            <SelectItem value="sugam-darshan">Sugam Darshan</SelectItem>
             <SelectItem value="general-darshan">General Darshan</SelectItem>
             <SelectItem value="puja">Puja Booking</SelectItem>
             <SelectItem value="prasad">Prasad Delivery</SelectItem>
