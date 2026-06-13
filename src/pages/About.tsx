@@ -1,4 +1,4 @@
-﻿import { SEO } from "@/components/SEO";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-final.png";
@@ -10,6 +10,7 @@ const About = () => (
     <SEO
       title="About Vandan Darshan — Devotees serving devotees"
       description="Vandan Darshan is a trusted spiritual concierge spreading devotion through Sugam Darshan, puja, prasad and chadhava across India's most sacred temples."
+      canonical="https://vandandarshan.com/about"
     />
 
     <section className="container-prose py-20 grid lg:grid-cols-2 gap-12 items-center">

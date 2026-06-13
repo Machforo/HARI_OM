@@ -1,4 +1,4 @@
-﻿import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { BookingForm } from "@/components/BookingForm";
 
@@ -7,6 +7,7 @@ const Contact = () => (
     <SEO
       title="Contact Vandan Darshan — Get in touch with our team"
       description="Reach Vandan Darshan for Sugam Darshan bookings, puja, prasad and yatra assistance. Call, email or request a callback — we respond within 30 minutes."
+      canonical="https://vandandarshan.com/contact"
     />
 
     <section className="container-prose py-16 text-center">

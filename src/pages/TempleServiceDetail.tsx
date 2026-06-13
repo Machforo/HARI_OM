@@ -1,4 +1,4 @@
-﻿import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ArrowRight, Check, MapPin, Star, Sparkles, Flame, Gift, Compass, Heart, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { BookingModal } from "@/components/BookingModal";
@@ -243,6 +243,7 @@ const TempleServiceDetail = ({ type: propType }: { type?: keyof typeof serviceTy
       <SEO
         title={`${service.title} at ${templeName} | Vandan Darshan`}
         description={`Book authentic ${service.title} at ${templeName}. Professional assistance, verified priests, and hassle-free spiritual services.`}
+        canonical={`https://vandandarshan.com/${baseSlug}-temple/${type}`}
       />
 
       <div className="bg-[#FFF8F0] min-h-screen text-[#2E2520] font-sans selection:bg-[#D85A30] selection:text-white overflow-x-hidden relative">

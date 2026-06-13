@@ -42,6 +42,7 @@ const SpiritualMedia = () => {
       <SEO
         title="Spiritual Media — Divine Aartis, Blogs, News & Events | Vandan Darshan"
         description="Immerse yourself in sacred aartis, spiritual wisdom blogs, temple news, and upcoming spiritual events. Discover the beauty of Indian traditions through curated spiritual content."
+        canonical="https://vandandarshan.com/media/blogs"
       />
 
       {/* HERO SECTION */}

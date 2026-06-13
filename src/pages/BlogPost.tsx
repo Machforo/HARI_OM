@@ -1,4 +1,4 @@
-﻿import { SEO } from "@/components/SEO";
+import { SEO } from "@/components/SEO";
 import { blogs } from "@/data/blogs";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -29,7 +29,11 @@ const BlogPost = () => {
 
   return (
     <div className="bg-background">
-      <SEO title={`${blog.title} | Vandan Darshan`} description={blog.excerpt} />
+      <SEO 
+        title={`${blog.title} | Vandan Darshan`} 
+        description={blog.excerpt} 
+        canonical={`https://vandandarshan.com/media/blogs/${slug}`}
+      />
 
       {/* HERO SECTION */}
       <section className="relative h-[70vh] flex items-end pb-24 overflow-hidden">
