@@ -3,6 +3,20 @@
   "cleanUrls": true,
   "trailingSlash": false,
 
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.vandandarshan.com"
+        }
+      ],
+      "destination": "https://vandandarshan.com/:path*",
+      "statusCode": 301
+    }
+  ],
+
   "headers": [
     {
       "source": "/(.*).mp4",

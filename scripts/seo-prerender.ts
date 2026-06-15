@@ -16,6 +16,15 @@ const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");
 const DOMAIN = "https://vandandarshan.com";
 const TODAY = new Date().toISOString().split("T")[0];
 
+// HTML Minifier for SEO optimization
+function minifyHtml(html: string): string {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/>\s+</g, "><")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 // Dynamic shloka resolution matching TempleDetail
 function getShlokaAndTranslation(deity?: string, baseSlug?: string) {
   const d = (deity || "").toLowerCase();
@@ -143,7 +152,7 @@ function renderHeader(isHomepage: boolean) {
     <div class="container mx-auto px-6 py-2 flex items-center justify-between">
       <a href="/" class="flex items-center gap-4 group">
         <div class="relative h-16 w-16">
-          <img src="/assets/logo-final.png" alt="Vandan Darshan" class="h-full w-full object-contain" />
+          <img src="/assets/logo-final.png" alt="Vandan Darshan Logo" width="64" height="64" loading="eager" class="h-full w-full object-contain" />
         </div>
         <div class="leading-tight">
           <div class="font-serif text-lg font-bold text-secondary">
@@ -174,7 +183,7 @@ function renderFooter() {
     <div class="container mx-auto px-6 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
       <div>
         <div class="flex items-center gap-3 mb-4">
-          <img src="/assets/logo-final.png" alt="Vandan Darshan" class="h-10 w-10 object-contain" />
+          <img src="/assets/logo-final.png" alt="Vandan Darshan Footer Logo" width="40" height="40" loading="lazy" class="h-10 w-10 object-contain" />
           <div class="leading-tight">
             <div class="font-serif text-md font-semibold text-secondary">Vandan Darshan</div>
             <div class="font-devanagari text-xs text-gold">वन्दन दर्शन</div>
@@ -192,6 +201,7 @@ function renderFooter() {
           <li><a href="/media/blogs" class="hover:text-primary">Spiritual Blogs</a></li>
           <li><a href="/about" class="hover:text-primary">About Us</a></li>
           <li><a href="/contact" class="hover:text-primary">Contact</a></li>
+          <li><a href="/consultant" class="hover:text-primary">Spiritual Consultant</a></li>
         </ul>
       </div>
       <div>
@@ -251,7 +261,7 @@ function renderTempleLayout(slug: string, name: string, state: string, deity: st
     <!-- Hero Banner -->
     <section class="relative bg-[#1A1240] text-white py-24 overflow-hidden">
       <div class="absolute inset-0 opacity-40">
-        <img src="${image}" alt="${name}" class="w-full h-full object-cover" />
+        <img src="${image}" alt="${name}" width="1200" height="450" loading="lazy" class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-[#1A1240] via-[#1A1240]/70 to-transparent" />
       </div>
       <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-6">
@@ -313,25 +323,29 @@ function renderStaticPage(pageName: string) {
           <h2 class="font-serif text-4xl font-bold text-secondary">Our Sacred Services</h2>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4">
+          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4 hover:shadow-lg transition-all">
             <div class="text-4xl">🛕</div>
-            <h3 class="font-serif text-xl font-bold text-secondary">Sugam Darshan</h3>
+            <h3 class="font-serif text-xl font-bold text-secondary"><a href="/darshan" class="hover:text-primary">Sugam Darshan</a></h3>
             <p class="text-xs text-muted-foreground font-semibold">Priority access and guided temple visits for hassle-free worship.</p>
+            <a href="/darshan" class="text-xs text-[#D85A30] hover:underline font-bold block pt-2">Explore Sugam Darshan →</a>
           </div>
-          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4">
+          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4 hover:shadow-lg transition-all">
             <div class="text-4xl">🔥</div>
-            <h3 class="font-serif text-xl font-bold text-secondary">Pooja Services</h3>
+            <h3 class="font-serif text-xl font-bold text-secondary"><a href="/puja" class="hover:text-primary">Pooja Services</a></h3>
             <p class="text-xs text-muted-foreground font-semibold">Authentic Sankalp Pujas performed by priests in your name.</p>
+            <a href="/puja" class="text-xs text-[#D85A30] hover:underline font-bold block pt-2">Explore Pooja Services →</a>
           </div>
-          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4">
+          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4 hover:shadow-lg transition-all">
             <div class="text-4xl">🎁</div>
-            <h3 class="font-serif text-xl font-bold text-secondary">Prasad Delivery</h3>
+            <h3 class="font-serif text-xl font-bold text-secondary"><a href="/prasad" class="hover:text-primary">Prasad Delivery</a></h3>
             <p class="text-xs text-muted-foreground font-semibold">Blessed temple prasadam delivered directly to your doorstep.</p>
+            <a href="/prasad" class="text-xs text-[#D85A30] hover:underline font-bold block pt-2">Explore Prasad Delivery →</a>
           </div>
-          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4">
+          <div class="p-8 bg-white border border-border/40 rounded-3xl text-center space-y-4 hover:shadow-lg transition-all">
             <div class="text-4xl">❤️</div>
-            <h3 class="font-serif text-xl font-bold text-secondary">Chadhava</h3>
+            <h3 class="font-serif text-xl font-bold text-secondary"><a href="/chadhava" class="hover:text-primary">Chadhava</a></h3>
             <p class="text-xs text-muted-foreground font-semibold">Offer vastram, flowers, or shringar to your deity remotely.</p>
+            <a href="/chadhava" class="text-xs text-[#D85A30] hover:underline font-bold block pt-2">Explore Chadhava Offerings →</a>
           </div>
         </div>
       </section>
@@ -397,45 +411,49 @@ function renderStaticPage(pageName: string) {
           <p class="text-muted-foreground max-w-xl mx-auto font-medium">Each service comes with comprehensive support, authentic rituals, and personalized guidance from our spiritual team.</p>
         </div>
         <div class="grid md:grid-cols-2 gap-8">
-          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6">
+          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6 hover:shadow-lg transition-all text-left">
             <div class="h-12 w-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center font-bold text-xl">🛕</div>
-            <h2 class="font-serif text-2xl font-bold">Sugam Darshan</h2>
+            <h2 class="font-serif text-2xl font-bold"><a href="/darshan" class="hover:text-primary">Sugam Darshan</a></h2>
             <p class="text-sm text-muted-foreground font-semibold">Skip the long queues and focus on your prayer. Our on-ground team ensures a seamless, divine experience at India's holiest shrines.</p>
-            <ul class="text-xs font-bold space-y-2 text-secondary">
+            <ul class="text-xs font-bold space-y-2 text-secondary pb-4">
               <li>• Priority Access</li>
               <li>• Verified Local Guides</li>
               <li>• Elderly Assistance</li>
             </ul>
+            <a href="/darshan" class="inline-flex h-10 px-6 rounded-full bg-[#D85A30] hover:bg-[#B04320] text-white items-center justify-center text-[10px] font-black uppercase tracking-wider">Learn More →</a>
           </div>
-          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6">
+          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6 hover:shadow-lg transition-all text-left">
             <div class="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl">🔥</div>
-            <h2 class="font-serif text-2xl font-bold">Pooja Services</h2>
+            <h2 class="font-serif text-2xl font-bold"><a href="/puja" class="hover:text-primary">Pooja Services</a></h2>
             <p class="text-sm text-muted-foreground font-semibold">Personalized Sankalp Pujas performed by authentic temple priests in your name. Experience the rituals from anywhere in the world.</p>
-            <ul class="text-xs font-bold space-y-2 text-secondary">
+            <ul class="text-xs font-bold space-y-2 text-secondary pb-4">
               <li>• Live Sankalp</li>
               <li>• Authentic Priests</li>
               <li>• Digital Recording</li>
             </ul>
+            <a href="/puja" class="inline-flex h-10 px-6 rounded-full bg-[#D85A30] hover:bg-[#B04320] text-white items-center justify-center text-[10px] font-black uppercase tracking-wider">Learn More →</a>
           </div>
-          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6">
+          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6 hover:shadow-lg transition-all text-left">
             <div class="h-12 w-12 rounded-xl bg-yellow-50 text-[#E6A817] flex items-center justify-center font-bold text-xl">🎁</div>
-            <h2 class="font-serif text-2xl font-bold">Prasad Delivery</h2>
+            <h2 class="font-serif text-2xl font-bold"><a href="/prasad" class="hover:text-primary">Prasad Delivery</a></h2>
             <p class="text-sm text-muted-foreground font-semibold">Authentic temple prasadam sourced directly from the shrine and delivered to your doorstep with purity and devotion.</p>
-            <ul class="text-xs font-bold space-y-2 text-secondary">
+            <ul class="text-xs font-bold space-y-2 text-secondary pb-4">
               <li>• Hygienic Packing</li>
               <li>• Global Shipping</li>
               <li>• Freshly Sourced</li>
             </ul>
+            <a href="/prasad" class="inline-flex h-10 px-6 rounded-full bg-[#D85A30] hover:bg-[#B04320] text-white items-center justify-center text-[10px] font-black uppercase tracking-wider">Learn More →</a>
           </div>
-          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6">
+          <div class="p-10 bg-white border border-border/30 rounded-[3rem] space-y-6 hover:shadow-lg transition-all text-left">
             <div class="h-12 w-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center font-bold text-xl">❤️</div>
-            <h2 class="font-serif text-2xl font-bold">Chadhava Offerings</h2>
+            <h2 class="font-serif text-2xl font-bold"><a href="/chadhava" class="hover:text-primary">Chadhava Offerings</a></h2>
             <p class="text-sm text-muted-foreground font-semibold">Offer Vastram, Flowers, or Shringar to your favorite deity. We facilitate your offerings with traditional rituals.</p>
-            <ul class="text-xs font-bold space-y-2 text-secondary">
+            <ul class="text-xs font-bold space-y-2 text-secondary pb-4">
               <li>• Traditional Rituals</li>
               <li>• Video Confirmation</li>
               <li>• Sacred Offerings</li>
             </ul>
+            <a href="/chadhava" class="inline-flex h-10 px-6 rounded-full bg-[#D85A30] hover:bg-[#B04320] text-white items-center justify-center text-[10px] font-black uppercase tracking-wider">Learn More →</a>
           </div>
         </div>
       </div>
@@ -637,7 +655,58 @@ function renderStaticPage(pageName: string) {
     `;
   }
 
+  if (pageName === "blogs") {
+    const blogLinks = blogs.map(b => `
+      <article class="p-8 bg-white border border-border/40 rounded-3xl hover:shadow-lg transition-all space-y-4 text-left">
+        <span class="text-[10px] uppercase font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">${b.category}</span>
+        <h3 class="font-serif text-xl font-bold text-secondary">
+          <a href="/media/blogs/${b.slug}" class="hover:text-primary">${b.title}</a>
+        </h3>
+        <p class="text-xs text-muted-foreground font-semibold leading-relaxed">${b.excerpt}</p>
+        <div class="flex items-center justify-between pt-4 text-[10px] font-bold text-muted-foreground uppercase">
+          <span>By ${b.author}</span>
+          <span>${b.date}</span>
+        </div>
+      </article>
+    `).join("\n");
+
+    return `
+    <div class="bg-[#FFF8F0] min-h-screen text-secondary pt-[130px] lg:pt-[150px] py-16">
+      <div class="container mx-auto px-6 max-w-5xl space-y-12">
+        <div class="text-center space-y-4">
+          <span class="text-xs uppercase tracking-widest text-gold font-bold">Spiritual Wisdom</span>
+          <h1 class="font-serif text-5xl font-bold text-secondary">Spiritual Media & Blogs</h1>
+          <p class="text-muted-foreground font-semibold max-w-xl mx-auto leading-relaxed">Read insightful articles, stories of shrines, and details of Vedic rituals written by our spiritual coordinators.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          ${blogLinks}
+        </div>
+      </div>
+    </div>
+    `;
+  }
+
   if (pageName === "temples") {
+    const templeLinks = allTemplesMerged.map(t => {
+      const metadata = templeMetadata[t.slug] || {};
+      const state = metadata.state || "India";
+      const deity = metadata.deity || "Deity";
+      return `
+      <div class="p-6 bg-white border border-border/40 rounded-3xl hover:shadow-lg transition-all space-y-3 text-left">
+        <div class="text-[10px] font-bold text-gold uppercase tracking-wider">${state} | Deity: ${deity}</div>
+        <h3 class="font-serif text-xl font-bold text-secondary">
+          <a href="/${t.slug}-temple" class="hover:text-primary">${t.name}</a>
+        </h3>
+        <div class="grid grid-cols-2 gap-2 pt-3 text-[9px] font-black uppercase tracking-wider text-center">
+          <a href="/${t.slug}-temple/darshan" class="bg-[#D85A30]/10 text-[#D85A30] py-2 rounded-xl hover:bg-[#D85A30] hover:text-white transition-colors">Darshan</a>
+          <a href="/${t.slug}-temple/puja" class="bg-[#6B1A1A]/10 text-[#6B1A1A] py-2 rounded-xl hover:bg-[#6B1A1A] hover:text-white transition-colors">Pooja</a>
+          <a href="/${t.slug}-temple/prasad" class="bg-muted text-muted-foreground py-2 rounded-xl hover:bg-secondary hover:text-white transition-colors">Prasad</a>
+          <a href="/${t.slug}-temple/chadhava" class="bg-muted text-muted-foreground py-2 rounded-xl hover:bg-secondary hover:text-white transition-colors">Chadhava</a>
+        </div>
+      </div>
+      `;
+    }).join("\n");
+
     return `
     <div class="bg-[#FFF8F0] min-h-screen text-secondary pt-[130px] lg:pt-[150px] py-16">
       <div class="container mx-auto px-6 max-w-5xl space-y-12">
@@ -646,9 +715,8 @@ function renderStaticPage(pageName: string) {
           <h1 class="font-serif text-5xl font-bold text-secondary">Holy Temples of India</h1>
           <p class="text-muted-foreground font-semibold max-w-xl mx-auto leading-relaxed">Explore and plan your assisted yatra, booking for Sugam Darshan, and online puja coordination across 90+ sacred places of worship in India.</p>
         </div>
-        <div class="bg-white rounded-[2rem] p-12 border border-border/40 shadow-sm text-center">
-          <p class="text-muted-foreground font-semibold mb-8">All holy temples are listed here with detailed timings, travel routes, and booking facilities.</p>
-          <a href="/book" class="h-12 px-8 bg-[#D85A30] hover:bg-[#B04320] text-white rounded-full inline-flex items-center justify-center text-xs font-bold uppercase tracking-wider">Book Yatra Services</a>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          ${templeLinks}
         </div>
       </div>
     </div>
@@ -671,13 +739,25 @@ function renderStaticPage(pageName: string) {
     const displayTitle = titles[pageName as keyof typeof titles];
     const displayDetail = details[pageName as keyof typeof details];
 
+    const templeServiceLinks = allTemplesMerged.map(t => {
+      const metadata = templeMetadata[t.slug] || {};
+      const state = metadata.state || "India";
+      return `
+      <a href="/${t.slug}-temple/${pageName}" class="p-4 bg-white border border-border/30 rounded-2xl hover:border-gold hover:text-primary transition-all text-left block">
+        <span class="text-[9px] font-bold text-gold uppercase block">${state}</span>
+        <span class="font-serif font-bold text-sm text-secondary">${t.name}</span>
+        <span class="text-[10px] text-muted-foreground block mt-1">Book ${displayTitle} →</span>
+      </a>
+      `;
+    }).join("\n");
+
     return `
     <div class="bg-[#FFF8F0] min-h-screen text-secondary pt-[130px] lg:pt-[150px] py-16">
       <div class="container mx-auto px-6 max-w-5xl space-y-12 text-center">
         <span class="text-xs uppercase tracking-widest text-gold font-bold">Spiritual Offerings</span>
         <h1 class="font-serif text-5xl font-bold text-secondary">${displayTitle} Coordination</h1>
         <p class="text-muted-foreground font-semibold max-w-2xl mx-auto leading-relaxed">${displayDetail}</p>
-        <div class="bg-white rounded-[2.5rem] p-12 border border-border/40 text-left grid md:grid-cols-2 gap-8 items-center">
+        <div class="bg-white rounded-[2.5rem] p-12 border border-border/40 text-left grid md:grid-cols-2 gap-8 items-center animate-fade-in">
           <div class="space-y-6">
             <h3 class="font-serif text-2xl font-bold text-secondary">Why choose Vandan Darshan?</h3>
             <ul class="space-y-4 text-xs font-bold text-muted-foreground pl-4 list-disc">
@@ -690,6 +770,17 @@ function renderStaticPage(pageName: string) {
           </div>
           <div class="bg-[#FFF8F0] rounded-[2rem] p-8 border border-border/20 text-center font-bold text-gold text-sm">
             Temple Booking Form (Hydrates dynamically on mount)
+          </div>
+        </div>
+
+        <!-- Temple Services Directory -->
+        <div class="mt-20 max-w-5xl mx-auto space-y-8">
+          <div class="text-center">
+            <h2 class="font-serif text-3xl font-bold text-secondary">Available Shrines for ${displayTitle}</h2>
+            <p class="text-xs text-muted-foreground font-semibold mt-2">Select a holy shrine below to learn more and book your assisted ${displayTitle.toLowerCase()} services.</p>
+          </div>
+          <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            ${templeServiceLinks}
           </div>
         </div>
       </div>
@@ -790,19 +881,30 @@ function generateSchema(pageName: string, data?: any) {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Service",
+          "@type": "Product",
           "name": `${serviceTitle} at ${name}`,
           "description": `Book authentic ${serviceTitle} at ${name}. Professional assistance, verified priests, and hassle-free spiritual services.`,
-          "provider": {
-            "@type": "Organization",
-            "name": "Vandan Darshan",
-            "url": DOMAIN
+          "image": `${DOMAIN}/assets/logo-final.png`,
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "INR",
+            "lowPrice": "501",
+            "highPrice": "5000",
+            "offerCount": "5",
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Standard Booking",
+                "price": "501",
+                "priceCurrency": "INR",
+                "availability": "https://schema.org/InStock"
+              }
+            ]
           },
-          "areaServed": {
-            "@type": "State",
-            "name": state
-          },
-          "serviceType": serviceTitle
+          "brand": {
+            "@type": "Brand",
+            "name": "Vandan Darshan"
+          }
         },
         {
           "@type": "BreadcrumbList",
@@ -811,6 +913,55 @@ function generateSchema(pageName: string, data?: any) {
             { "@type": "ListItem", "position": 2, "name": "Temples", "item": `${DOMAIN}/temples` },
             { "@type": "ListItem", "position": 3, "name": name, "item": `${DOMAIN}/${slug}-temple` },
             { "@type": "ListItem", "position": 4, "name": serviceTitle, "item": `${DOMAIN}/${slug}-temple/${type}` }
+          ]
+        }
+      ]
+    };
+  } else if (pageName === "contact") {
+    schema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "@id": `${DOMAIN}/contact#localbusiness`,
+          "name": "Vandan Darshan",
+          "image": `${DOMAIN}/assets/logo-final.png`,
+          "telephone": "+91-8960965151",
+          "email": "seva@vandandarshan.com",
+          "url": `${DOMAIN}/contact`,
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Vandan Darshan Pvt. Ltd.",
+            "addressLocality": "Noida",
+            "addressRegion": "Uttar Pradesh",
+            "postalCode": "201301",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "28.5355",
+            "longitude": "77.3910"
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "08:00",
+            "closes": "21:00"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": DOMAIN },
+            { "@type": "ListItem", "position": 2, "name": "Contact", "item": `${DOMAIN}/contact` }
           ]
         }
       ]
@@ -881,15 +1032,23 @@ function writeSitemaps() {
 
   const entries: string[] = [];
 
-  // 1. Pages entries
+  // 1. Pages entries (excluding noindex thank-you page)
   const staticPages = [
     "/", "/temples", "/services", "/about", "/contact", "/book", 
     "/media/blogs", "/darshan", "/puja", "/prasad", "/chadhava", 
-    "/consultant", "/thank-you", "/terms", "/privacy", "/cancellation", 
+    "/consultant", "/terms", "/privacy", "/cancellation", 
     "/shipping", "/disclaimer"
   ];
   for (const p of staticPages) {
-    entries.push(makeEntry(p, p === "/" ? "1.0" : "0.9", "daily"));
+    let priority = "0.9";
+    let changefreq = "daily";
+    if (p === "/") {
+      priority = "1.0";
+    } else if (["/terms", "/privacy", "/cancellation", "/shipping", "/disclaimer"].includes(p)) {
+      priority = "0.3";
+      changefreq = "monthly";
+    }
+    entries.push(makeEntry(p, priority, changefreq));
   }
 
   // 2. Temple and Service entries
@@ -954,7 +1113,7 @@ async function prerenderAll() {
   const actualDarshanFiles = fs.existsSync(darshanDir) ? fs.readdirSync(darshanDir) : [];
 
   // Helper to replace tags in head
-  const compilePage = (bodyHtml: string, meta: { title: string; description: string; canonical: string; image?: string }, schemaHtml: string) => {
+  const compilePage = (bodyHtml: string, meta: { title: string; description: string; canonical: string; image?: string; noindex?: boolean }, schemaHtml: string) => {
     let pageHtml = template;
 
     // Inject fully rendered HTML into root
@@ -988,7 +1147,14 @@ async function prerenderAll() {
     // Inject schema inside head
     pageHtml = pageHtml.replace('</head>', `${schemaHtml}\n</head>`);
 
-    return pageHtml;
+    // Inject noindex if specified, otherwise clean any old robots meta tags
+    if (meta.noindex) {
+      pageHtml = pageHtml.replace('</head>', `<meta name="robots" content="noindex, nofollow" />\n</head>`);
+    } else {
+      pageHtml = pageHtml.replace(/<meta name="robots" content="noindex.*?"\s*\/?>/gi, "");
+    }
+
+    return minifyHtml(pageHtml);
   };
 
   const writePage = (routePath: string, htmlContent: string) => {
@@ -1011,7 +1177,7 @@ async function prerenderAll() {
     { path: "/prasad", name: "prasad", title: "Online Prasad Delivery from Sacred Temples | Vandan Darshan", desc: "Order authentic temple prasadam online. Sourced fresh from holy shrines like Somnath, Kedarnath, and Mahakaleshwar, delivered worldwide." },
     { path: "/chadhava", name: "chadhava", title: "Offer Chadhava, Vastram & Shringar Remotely | Vandan Darshan", desc: "Offer vastram, flowers, shringar, or chadhava to your beloved deity from anywhere. Verified offerings with traditional rituals and video proof." },
     { path: "/consultant", name: "consultant", title: "Talk to a Spiritual Consultant — Yatra Planning | Vandan Darshan", desc: "Speak with our expert spiritual coordinators. Get custom itineraries, senior-friendly yatra routes, and customized booking assistance." },
-    { path: "/thank-you", name: "thank-you", title: "Thank You for Your Booking Request | Vandan Darshan", desc: "Thank you for choosing Vandan Darshan. Our spiritual yatra coordinators will contact you within 30 minutes to finalize your booking." },
+    { path: "/thank-you", name: "thank-you", title: "Thank You for Your Booking Request | Vandan Darshan", desc: "Thank you for choosing Vandan Darshan. Our spiritual yatra coordinators will contact you within 30 minutes to finalize your booking.", noindex: true },
     { path: "/terms", name: "terms", title: "Terms and Conditions — Vandan Darshan", desc: "Read the Terms and Conditions of Vandan Darshan. Understand our booking policies, devotee codes of conduct, and yatra service terms." },
     { path: "/privacy", name: "privacy", title: "Privacy Policy — Vandan Darshan", desc: "Review the privacy policy of Vandan Darshan. Learn how we collect, store, protect, and handle your personal booking details securely." },
     { path: "/cancellation", name: "cancellation", title: "Cancellation and Refund Policy — Vandan Darshan", desc: "Learn about our cancellation and refund rules. Flexible refund options for pujas, prasads, and guided darshan booking cancellations." },
@@ -1021,7 +1187,7 @@ async function prerenderAll() {
 
   for (const page of staticPagesList) {
     const bodyHtml = renderHeader(false) + renderStaticPage(page.name) + renderFooter();
-    const meta = { title: page.title, description: page.desc, canonical: `${DOMAIN}${page.path}` };
+    const meta = { title: page.title, description: page.desc, canonical: `${DOMAIN}${page.path}`, noindex: page.noindex };
     const schema = generateSchema(page.name);
     const html = compilePage(bodyHtml, meta, schema);
     writePage(page.path, html);
@@ -1042,7 +1208,7 @@ async function prerenderAll() {
   for (const b of blogs) {
     const blogBody = renderHeader(false) + `
     <div class="bg-white pt-[130px] lg:pt-[150px] py-16">
-      <article class="container mx-auto px-6 max-w-3xl space-y-8">
+      <article class="container mx-auto px-6 max-w-3xl space-y-8 text-left">
         <span class="inline-block px-4 py-1.5 bg-primary/15 text-primary rounded-full text-xs font-bold uppercase tracking-wider">${b.category}</span>
         <h1 class="font-serif text-4xl md:text-6xl font-bold text-secondary leading-tight">${b.title}</h1>
         <div class="flex items-center gap-6 text-xs text-muted-foreground font-semibold pb-6 border-b">
@@ -1050,6 +1216,7 @@ async function prerenderAll() {
           <span>•</span>
           <span>${b.date}</span>
         </div>
+        ${b.image ? `<div class="aspect-video w-full overflow-hidden rounded-3xl my-8"><img src="${b.image}" alt="${b.title}" width="800" height="450" loading="lazy" class="w-full h-full object-cover shadow-md" /></div>` : ""}
         <p class="font-serif text-xl text-secondary italic font-bold leading-relaxed border-l-4 border-primary pl-6">${b.excerpt}</p>
         <div class="prose max-w-none text-muted-foreground font-semibold leading-relaxed space-y-6">${b.content}</div>
       </article>
