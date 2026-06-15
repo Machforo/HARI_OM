@@ -6,14 +6,9 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.vandandarshan.com"
-        }
-      ],
+      "has": [{ "type": "host", "value": "www.vandandarshan.com" }],
       "destination": "https://vandandarshan.com/:path*",
-      "statusCode": 301
+      "permanent": true
     }
   ],
 
@@ -102,7 +97,15 @@
 
   "rewrites": [
     {
-      "source": "/((?!.*\\.).*)",
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
+    },
+    {
+      "source": "/robots.txt", 
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/((?!sitemap.xml|robots.txt|.*\\.xml|.*\\.txt).*)",
       "destination": "/index.html"
     }
   ]
