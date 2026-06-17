@@ -17,4 +17,4 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-Sitemap: https://vandandarshan.com/sitemap.xml
+Sitemap: https://www.vandandarshan.com/sitemap.xml

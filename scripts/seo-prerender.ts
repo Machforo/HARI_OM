@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 const DIST_DIR = path.join(__dirname, "..", "dist");
 const PUBLIC_DIR = path.join(__dirname, "..", "public");
 const TEMPLATE_PATH = path.join(DIST_DIR, "index.html");
-const DOMAIN = "https://vandandarshan.com";
+const DOMAIN = "https://www.vandandarshan.com";
 const TODAY = new Date().toISOString().split("T")[0];
 
 // HTML Minifier for SEO optimization

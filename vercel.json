@@ -7,8 +7,8 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.vandandarshan.com" }],
-      "destination": "https://vandandarshan.com/:path*",
+      "has": [{ "type": "host", "value": "vandandarshan.com" }],
+      "destination": "https://www.vandandarshan.com/:path*",
       "permanent": true
     }
   ],
