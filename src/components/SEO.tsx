@@ -14,7 +14,7 @@ export const SEO = ({ title, description, canonical, image, keywords, jsonLd }: 
   const desc = description.length > 160 ? description.slice(0, 157) + "..." : description;
   let url = canonical || (typeof window !== "undefined" ? window.location.href : "");
   if (url) {
-    url = url.replace(/^(https?:\/\/)?(www\.)?vandandarshan\.com/i, "https://vandandarshan.com");
+    url = url.replace(/^(https?:\/\/)?(www\.)?vandandarshan\.com/i, "https://www.vandandarshan.com");
   }
 
   return (
